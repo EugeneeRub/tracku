@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Bus&amp;Go</string>
+
+    <string name="pedestrian">Pedestrian</string>
+    <string name="or">or</string>
+    <string name="you_are">You are:</string>
+    <string name="driver">Driver</string>
+</resources>
