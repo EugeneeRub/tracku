@@ -5,4 +5,18 @@
     <string name="or">or</string>
     <string name="you_are">You are:</string>
     <string name="driver">Driver</string>
+    <string name="transport_registration">Transport registration</string>
+    <string name="prv_enterprises">Private Enterprises</string>
+    <string name="stt_enterprises">State Enterprises</string>
+    <string name="resume">Resume</string>
+    <string name="city">Choose city</string>
+    <string name="schedule_and_routes">Schedule and routes</string>
+    <string name="exit">Exit</string>
+    <string name="general">General</string>
+    <string name="premium">Premium</string>
+    <string name="enter_the_code">Enter the code</string>
+
+    <!-- Navigation Menu -->
+    <string name="open_drawer">Open Drawer</string>
+    <string name="close_drawer">Close Drawer</string>
 </resources>
