@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Bus&amp;Go</string>
+    <string name="app_name">Car Monitor</string>
 
     <string name="pedestrian">Pedestrian</string>
     <string name="or">or</string>
@@ -19,4 +19,16 @@
     <!-- Navigation Menu -->
     <string name="open_drawer">Open Drawer</string>
     <string name="close_drawer">Close Drawer</string>
+    <string name="value">Value</string>
+    <string name="please_enter_the_value">Please, enter the value</string>
+    <string name="check">Check</string>
+    <string name="login">Sign in</string>
+    <string name="email">Email</string>
+    <string name="no_account">No account,</string>
+    <string name="sign_up">Sign up</string>
+    <string name="have_an_account">Already has an account?</string>
+    <string name="username">Username</string>
+    <string name="phone">Phone</string>
+    <string name="password">Password</string>
+    <string name="access_token_map">pk.eyJ1IjoiZXZnZW5peXl5eXkiLCJhIjoiY2pqNnowOTdsMjk4azNxcGdkYXdkOWljbiJ9.cN_iJaQvFE8SIDKofh_n1A</string>
 </resources>

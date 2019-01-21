@@ -1,4 +1,4 @@
-package com.erproject.busgo.data;
+package com.erproject.busgo.data.data.simpleData;
 
 import com.google.gson.annotations.SerializedName;
 

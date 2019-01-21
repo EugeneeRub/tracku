@@ -1,5 +1,7 @@
-package com.erproject.busgo.splashScreen;
+package com.erproject.busgo.views.splashScreen;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.os.Bundle;
@@ -10,8 +12,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.erproject.busgo.R;
-import com.erproject.busgo.data.InterestingPhrase;
-import com.erproject.busgo.main.MainActivity;
+import com.erproject.busgo.data.data.simpleData.InterestingPhrase;
+import com.erproject.busgo.services.authManager.AuthController;
+import com.erproject.busgo.views.login.LoginActivity;
+import com.erproject.busgo.views.registration.RegistrationActivity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -24,12 +28,12 @@ import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.lang.reflect.Type;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
@@ -45,11 +49,6 @@ public class SplashScreenActivity extends AppCompatActivity {
     LinearLayout mainLayout;
     private AnimatorSet logoAnimatorSet;
     private List<InterestingPhrase> list;
-
-    @OnClick(R.id.btn_resume)
-    public void onBtnClick() {
-        goToMain();
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +97,18 @@ public class SplashScreenActivity extends AppCompatActivity {
         logoAnimatorSet = new AnimatorSet();
         logoAnimatorSet.play(ObjectAnimator.ofFloat(mainLayout,
                 "alpha", 0, 0.7f));
-        logoAnimatorSet.setDuration(2000);
+        logoAnimatorSet.setDuration(3000);
+        logoAnimatorSet.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                if (AuthController.getToken(getApplicationContext()) != null) {
+                    goToMain();
+                } else {
+                    goToLogin();
+                }
+            }
+        });
         logoAnimatorSet.start();
         overridePendingTransition(R.anim.fade_in, 0);
     }
@@ -106,7 +116,14 @@ public class SplashScreenActivity extends AppCompatActivity {
     public void goToMain() {
         if (logoAnimatorSet != null && logoAnimatorSet.isRunning())
             logoAnimatorSet.cancel();
-        startActivity(MainActivity.newInstance(this));
+        startActivity(RegistrationActivity.newInstance(this));
+        finish();
+    }
+
+    public void goToLogin() {
+        if (logoAnimatorSet != null && logoAnimatorSet.isRunning())
+            logoAnimatorSet.cancel();
+        startActivity(LoginActivity.newInstance(this));
         finish();
     }
 
@@ -121,7 +138,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         Writer writer = new StringWriter();
         char[] buffer = new char[1024];
         try {
-            Reader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+            Reader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
             int n;
             while ((n = reader.read(buffer)) != -1) {
                 writer.write(buffer, 0, n);

@@ -4,11 +4,14 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.erproject.busgo"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        resValue "string", "API_KEY_PLACE_FINDER",
+                (project.findProperty("API_KEY_PLACE_FINDER") ?: "")
     }
     buildTypes {
         release {
@@ -41,8 +44,8 @@ dependencies {
     implementation "com.squareup.retrofit2:adapter-rxjava:$rootProject.retrofit2Version"
     // RxJava
     implementation 'io.reactivex:rxandroid:1.2.1'
-    implementation 'io.reactivex.rxjava2:rxjava:2.0.6'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.0'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
     // Dagger dependencies
     annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
     implementation "com.google.dagger:dagger:$rootProject.daggerVersion"
@@ -52,4 +55,12 @@ dependencies {
     annotationProcessor "com.google.dagger:dagger-android-processor:$rootProject.daggerVersion"
     // Piccasso
     implementation 'com.squareup.picasso:picasso:2.71828'
+    // MapBox
+    implementation 'com.mapbox.mapboxsdk:mapbox-android-sdk:7.0.0'
+    // Services
+    implementation 'com.google.firebase:firebase-core:16.0.6'
+    // FireBase Cloud
+    implementation 'com.google.firebase:firebase-firestore:17.1.5'
 }
+
+apply plugin: 'com.google.gms.google-services'

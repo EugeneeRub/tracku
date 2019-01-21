@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "316518831736",
+    "firebase_url": "https://carmonitor-8edaa.firebaseio.com",
+    "project_id": "carmonitor-8edaa",
+    "storage_bucket": "carmonitor-8edaa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:316518831736:android:0deca6970ba3960e",
+        "android_client_info": {
+          "package_name": "com.erproject.busgo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "316518831736-c2f9jso9lnvh8ifei7nvku8o1qmnqi2i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.erproject.busgo",
+            "certificate_hash": "93a8287c86070887a8a72a3f277cd68f6a70e392"
+          }
+        },
+        {
+          "client_id": "316518831736-91f106m68srj9o3av95g1ogm5lighuc8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1Dc-Z82w1hC-QaEs3n3UjT2i7ieBsjd0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "316518831736-91f106m68srj9o3av95g1ogm5lighuc8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

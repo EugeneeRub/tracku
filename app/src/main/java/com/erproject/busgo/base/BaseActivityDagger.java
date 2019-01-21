@@ -9,16 +9,16 @@ import dagger.android.support.DaggerAppCompatActivity;
 
 
 public abstract class BaseActivityDagger extends DaggerAppCompatActivity {
-    public void showFragment(Fragment fragment, @IdRes int container, int tag) {
+    public void showFragment(Fragment fragment, @IdRes int container, String tag) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment currentFragment = fragmentManager.findFragmentById(container);
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
 
         if (currentFragment == null)
-            fragmentTransaction.add(container, fragment, String.valueOf(tag));
+            fragmentTransaction.add(container, fragment, tag);
         else
-            fragmentTransaction.replace(container, fragment, String.valueOf(tag));
+            fragmentTransaction.replace(container, fragment, tag);
 
         hideFragment(fragment);
         fragmentTransaction.show(fragment);

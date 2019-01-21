@@ -3,6 +3,7 @@ package com.erproject.busgo.dependencyinjection.application;
 import android.app.Application;
 
 import com.erproject.busgo.app.App;
+import com.erproject.busgo.data.RepositoryModule;
 import com.erproject.busgo.dependencyinjection.ActivityBindingModule;
 
 import javax.inject.Singleton;
@@ -18,6 +19,7 @@ import dagger.android.support.AndroidSupportInjectionModule;
         AndroidSupportInjectionModule.class,
         ApplicationModule.class,
         ActivityBindingModule.class,
+        RepositoryModule.class
 })
 public interface ApplicationComponent extends AndroidInjector<App> {
 
