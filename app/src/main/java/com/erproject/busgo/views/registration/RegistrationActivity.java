@@ -8,11 +8,14 @@ import android.support.design.widget.TextInputLayout;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.erproject.busgo.R;
 import com.erproject.busgo.base.BaseActivityDagger;
 import com.erproject.busgo.customViews.FixedTextInputEditText;
+import com.erproject.busgo.services.authManager.AuthController;
 import com.erproject.busgo.utils.TextValidWatcher;
+import com.erproject.busgo.views.main.MainActivity;
 
 import javax.inject.Inject;
 
@@ -25,7 +28,7 @@ public class RegistrationActivity extends BaseActivityDagger
         implements RegistrationActivityContract.View {
 
     @Inject
-    RegistrationActivityPresenter presenter;
+    RegistrationActivityPresenter mPresenter;
 
     //username
     @BindView(R.id.etl_username)
@@ -92,7 +95,7 @@ public class RegistrationActivity extends BaseActivityDagger
         mTextError.setVisibility(View.GONE);
         if (checkValid()) {
             mProgress.setVisibility(View.VISIBLE);
-            presenter.sendRegistration(mEtUsername.getText().toString(),
+            mPresenter.sendRegistration(mEtUsername.getText().toString(),
                     mEtEmail.getText().toString(),
                     mEtPhone.getText().toString(),
                     mEtPassword.getText().toString());
@@ -150,16 +153,37 @@ public class RegistrationActivity extends BaseActivityDagger
     }
 
     @Override
+    public void showToastError(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
     public void doneRegistration(String username, String password, String token) {
         mProgress.setVisibility(View.GONE);
-//        if (!token.isEmpty()) {
-//            AuthController.addAccount(getApplicationContext(), username, password, token);
-//            startActivity(MainActivity.newInstance(this));
-//        }
+        if (!token.isEmpty()) {
+            AuthController.addAccount(getApplicationContext(), username, password, token);
+            Intent a = MainActivity.newInstance(this);
+            a.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            a.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(a);
+        }
     }
 
     @Override
     public void setEmailError(String error) {
-        mLayoutEmail.setError("Email already exists");
+        mProgress.setVisibility(View.GONE);
+        mLayoutEmail.setError(error);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mPresenter.takeView(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mPresenter.dropView();
     }
 }

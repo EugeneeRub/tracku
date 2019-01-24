@@ -34,11 +34,9 @@ public class ErrorConverter {
         String msg = "";
         switch (code) {
             case 401:
-                msg = "You are not authorized";
+                msg = "User does not exist";
                 break;
             case 403:
-                msg = "Something went wrong on the server";
-                break;
             case 404:
                 msg = "Something went wrong on the server";
                 break;

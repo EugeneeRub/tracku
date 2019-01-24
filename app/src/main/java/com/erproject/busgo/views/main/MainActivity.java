@@ -164,6 +164,11 @@ public class MainActivity extends BaseActivityDagger
     }
 
     @Override
+    public void showToastError(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
     public void showCurrentCityDialog(final CityFinderResponse response) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(false);

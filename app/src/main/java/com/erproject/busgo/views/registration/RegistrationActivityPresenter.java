@@ -30,9 +30,8 @@ public class RegistrationActivityPresenter implements RegistrationActivityContra
     }
 
     @Override
-    public void sendRegistration(final String username, String email, String phone, final String password) {
+    public void sendRegistration(final String username, final String email, final String phone, final String password) {
         UserRegistrationRequest user = new UserRegistrationRequest(username, email, password, phone);
-
         mRepository.signUp(user).subscribe(new Subscriber<BaseResponse>() {
             @Override
             public void onCompleted() {
@@ -49,7 +48,7 @@ public class RegistrationActivityPresenter implements RegistrationActivityContra
 
             @Override
             public void onNext(BaseResponse baseResponse) {
-                mView.doneRegistration(username, password, baseResponse.getmToken());
+                mView.doneRegistration(email, password, baseResponse.getmToken());
             }
         });
     }

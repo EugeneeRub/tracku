@@ -15,7 +15,7 @@ import com.erproject.busgo.R;
 import com.erproject.busgo.data.data.simpleData.InterestingPhrase;
 import com.erproject.busgo.services.authManager.AuthController;
 import com.erproject.busgo.views.login.LoginActivity;
-import com.erproject.busgo.views.registration.RegistrationActivity;
+import com.erproject.busgo.views.main.MainActivity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -116,7 +116,7 @@ public class SplashScreenActivity extends AppCompatActivity {
     public void goToMain() {
         if (logoAnimatorSet != null && logoAnimatorSet.isRunning())
             logoAnimatorSet.cancel();
-        startActivity(RegistrationActivity.newInstance(this));
+        startActivity(MainActivity.newInstance(this));
         finish();
     }
 

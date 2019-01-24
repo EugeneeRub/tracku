@@ -12,6 +12,8 @@ android {
 
         resValue "string", "API_KEY_PLACE_FINDER",
                 (project.findProperty("API_KEY_PLACE_FINDER") ?: "")
+
+        multiDexEnabled true
     }
     buildTypes {
         release {

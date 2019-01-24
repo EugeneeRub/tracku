@@ -29,7 +29,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @SuppressWarnings("unused")
 public abstract class RepositoryModule {
     private static final String URL_IP = "http://api.ipapi.com/";
-    private static final String BASE_URL = "http://5c4c4fc2.ngrok.io/";
+    private static final String BASE_URL = "http://2da604ee.ngrok.io/";
     private static final String SHARED_PREFERENCES_FILE_KEY = "RepositoryModule.SHARED_PREFERENCES_FILE_KEY";
 
     @Singleton
@@ -74,7 +74,7 @@ public abstract class RepositoryModule {
 
     @Singleton
     @Provides
-    static RemoteCityFinderApi provideRemoteCityFinderApi(@Named("provideRetrofitCity") Retrofit retrofit) {
+    static RemoteCityFinderApi provideRemoteCityFinderApi(@Named("provideWeather") Retrofit retrofit) {
         return retrofit.create(RemoteCityFinderApi.class);
     }
 
