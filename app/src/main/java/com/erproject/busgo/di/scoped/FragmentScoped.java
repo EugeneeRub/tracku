@@ -1,4 +1,4 @@
-package com.erproject.busgo.dependencyinjection.scoped;
+package com.erproject.busgo.di.scoped;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;

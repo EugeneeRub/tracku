@@ -2,8 +2,17 @@ package com.erproject.busgo.views.registration;
 
 import com.erproject.busgo.data.Repository;
 import com.erproject.busgo.data.data.request.UserRegistrationRequest;
+import com.erproject.busgo.data.data.request.fbRegistration.FbConnectedUser;
+import com.erproject.busgo.data.data.request.fbRegistration.FbUserRegistration;
 import com.erproject.busgo.data.data.responses.BaseResponse;
 import com.erproject.busgo.utils.ErrorConverter;
+import com.google.android.gms.tasks.OnCanceledListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -13,10 +22,12 @@ import rx.Subscriber;
 public class RegistrationActivityPresenter implements RegistrationActivityContract.Presenter {
     private final Repository mRepository;
     private RegistrationActivityContract.View mView;
+    private DatabaseReference mDatabase;
 
     @Inject
     RegistrationActivityPresenter(Repository repository) {
         this.mRepository = repository;
+        this.mDatabase = FirebaseDatabase.getInstance().getReference();
     }
 
     @Override
@@ -31,7 +42,7 @@ public class RegistrationActivityPresenter implements RegistrationActivityContra
 
     @Override
     public void sendRegistration(final String username, final String email, final String phone, final String password) {
-        UserRegistrationRequest user = new UserRegistrationRequest(username, email, password, phone);
+        final UserRegistrationRequest user = new UserRegistrationRequest(username, email, password, phone);
         mRepository.signUp(user).subscribe(new Subscriber<BaseResponse>() {
             @Override
             public void onCompleted() {
@@ -48,7 +59,32 @@ public class RegistrationActivityPresenter implements RegistrationActivityContra
 
             @Override
             public void onNext(BaseResponse baseResponse) {
-                mView.doneRegistration(email, password, baseResponse.getmToken());
+                registerUserInFirebase(user, baseResponse.getmToken());
+            }
+        });
+    }
+
+    private void registerUserInFirebase(final UserRegistrationRequest user, final String token) {
+        FbUserRegistration fbUser = new FbUserRegistration();
+        //base data
+        String[] emailSplited = user.getmEmail().split("@");
+        fbUser.setmEmailSuffix(emailSplited[1]);
+        fbUser.setmRegisterPhone(user.getmPhoneNumber());
+        Map<String, Object> map = new HashMap<>();
+        map.put(user.getmUsername(), new FbConnectedUser());
+        fbUser.setMapOfUsers(map);
+
+        //add first user
+        mDatabase.child("users").child(emailSplited[0]).setValue(fbUser)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                mView.doneRegistration(user.getmEmail(), user.getmPassword(), token);
+            }
+        }).addOnCanceledListener(new OnCanceledListener() {
+            @Override
+            public void onCanceled() {
+                mView.showError(ErrorConverter.getMsgFromCode(new Throwable()));
             }
         });
     }

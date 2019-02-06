@@ -12,6 +12,8 @@ android {
 
         resValue "string", "API_KEY_PLACE_FINDER",
                 (project.findProperty("API_KEY_PLACE_FINDER") ?: "")
+        resValue "string", "ACCESS_TOKEN_MAP",
+                (project.findProperty("ACCESS_TOKEN_MAP") ?: "")
 
         multiDexEnabled true
     }
@@ -62,7 +64,11 @@ dependencies {
     // Services
     implementation 'com.google.firebase:firebase-core:16.0.6'
     // FireBase Cloud
-    implementation 'com.google.firebase:firebase-firestore:17.1.5'
+    implementation 'com.google.firebase:firebase-firestore:18.0.0'
+    // FireBase Database
+    implementation 'com.google.firebase:firebase-database:16.0.6'
+    // Location Services
+    // implementation 'com.google.android.gms:play-services-location:16.0.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

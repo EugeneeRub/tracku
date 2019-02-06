@@ -5,6 +5,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
+import com.erproject.busgo.views.main.fragmentMap.MapFragment;
+
 import dagger.android.support.DaggerAppCompatActivity;
 
 
@@ -15,10 +17,8 @@ public abstract class BaseActivityDagger extends DaggerAppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
 
-        if (currentFragment == null)
-            fragmentTransaction.add(container, fragment, tag);
-        else
-            fragmentTransaction.replace(container, fragment, tag);
+        if (currentFragment == null) fragmentTransaction.add(container, fragment, tag);
+        else fragmentTransaction.replace(container, fragment, tag);
 
         hideFragment(fragment);
         fragmentTransaction.show(fragment);
@@ -29,19 +29,7 @@ public abstract class BaseActivityDagger extends DaggerAppCompatActivity {
         return getSupportFragmentManager().findFragmentById(containerId) == null;
     }
 
-    protected void showFragment(@IdRes int containerId, BaseFragmentDagger fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment currentFragment = fragmentManager.findFragmentById(containerId);
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-        if (currentFragment == null) fragmentTransaction.add(containerId, fragment);
-        else fragmentTransaction.replace(containerId, fragment);
-
-        fragmentTransaction.commit();
-    }
-
-    public void showFragmentOrRestore(@IdRes int containerId, Fragment fragment,
-                                      String tagForRestoredFragment) {
+    public void showFragmentOrRestore(@IdRes int containerId, Fragment fragment, String tagForRestoredFragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         Fragment sameFragment = fragmentManager.findFragmentByTag(tagForRestoredFragment);
@@ -57,10 +45,32 @@ public abstract class BaseActivityDagger extends DaggerAppCompatActivity {
         fragmentTransaction.commit();
     }
 
-    private void hideAllFragments(FragmentManager fragmentManager,
-                                  FragmentTransaction fragmentTransaction) {
+    public void showFragmentOrRestore2(@IdRes int containerId, Fragment fragment, String tagForRestoredFragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        Fragment sameFragment = fragmentManager.findFragmentByTag(tagForRestoredFragment);
+
+        if (sameFragment == null) {
+            hideAllFragments2(fragmentManager, fragmentTransaction);
+            fragmentTransaction.add(containerId, fragment, tagForRestoredFragment);
+        } else {
+            hideAllFragments2(fragmentManager, fragmentTransaction);
+            fragmentTransaction.show(sameFragment);
+        }
+
+        fragmentTransaction.commit();
+    }
+
+    private void hideAllFragments(FragmentManager fragmentManager, FragmentTransaction fragmentTransaction) {
         for (Fragment fragment : fragmentManager.getFragments()) {
             fragmentTransaction.hide(fragment);
+        }
+    }
+
+    private void hideAllFragments2(FragmentManager fragmentManager, FragmentTransaction fragmentTransaction) {
+        for (Fragment fragment : fragmentManager.getFragments()) {
+            if (!(fragment instanceof MapFragment))
+                fragmentTransaction.hide(fragment);
         }
     }
 

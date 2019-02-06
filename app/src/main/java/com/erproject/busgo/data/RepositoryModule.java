@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 
 import com.erproject.busgo.data.annotations.Remote;
 import com.erproject.busgo.data.source.RemoteApi;
-import com.erproject.busgo.data.source.RemoteCityFinderApi;
 import com.erproject.busgo.data.source.RemoteSource;
 import com.erproject.busgo.data.source.Source;
 import com.google.gson.Gson;
@@ -28,29 +27,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @Module
 @SuppressWarnings("unused")
 public abstract class RepositoryModule {
-    private static final String URL_IP = "http://api.ipapi.com/";
-    private static final String BASE_URL = "http://2da604ee.ngrok.io/";
+    private static final String BASE_URL = "http://139.162.187.46:1517/";
     private static final String SHARED_PREFERENCES_FILE_KEY = "RepositoryModule.SHARED_PREFERENCES_FILE_KEY";
-
-    @Singleton
-    @Provides
-    @Named("provideWeather")
-    static Retrofit provideWeather() {
-        Gson gson = new GsonBuilder().setLenient().create();
-        GsonConverterFactory gsonConverterFactory = GsonConverterFactory.create(gson);
-
-        final OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .connectTimeout(10, TimeUnit.SECONDS)
-                .writeTimeout(10, TimeUnit.SECONDS)
-                .readTimeout(10, TimeUnit.SECONDS).build();
-
-        return new Retrofit.Builder()
-                .baseUrl(URL_IP)
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .addConverterFactory(gsonConverterFactory)
-                .client(okHttpClient)
-                .build();
-    }
 
     @Singleton
     @Provides
@@ -74,12 +52,6 @@ public abstract class RepositoryModule {
 
     @Singleton
     @Provides
-    static RemoteCityFinderApi provideRemoteCityFinderApi(@Named("provideWeather") Retrofit retrofit) {
-        return retrofit.create(RemoteCityFinderApi.class);
-    }
-
-    @Singleton
-    @Provides
     static RemoteApi provideRemoteApi(@Named("provideBase") Retrofit retrofit) {
         return retrofit.create(RemoteApi.class);
     }
@@ -89,11 +61,6 @@ public abstract class RepositoryModule {
     static SharedPreferences provideSharedPreferences(Application context) {
         return context.getSharedPreferences(SHARED_PREFERENCES_FILE_KEY, Context.MODE_PRIVATE);
     }
-
-    @Singleton
-    @Binds
-    @Remote
-    abstract Source.ICityFinder provideRemoteCityFinder(RemoteSource source);
 
     @Singleton
     @Binds

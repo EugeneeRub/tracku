@@ -1,4 +1,4 @@
-package com.erproject.busgo.dependencyinjection.application;
+package com.erproject.busgo.di.application;
 
 import android.app.Application;
 import android.content.Context;

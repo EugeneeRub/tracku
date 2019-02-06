@@ -1,10 +1,10 @@
-package com.erproject.busgo.dependencyinjection.application;
+package com.erproject.busgo.di.application;
 
 import android.app.Application;
 
 import com.erproject.busgo.app.App;
 import com.erproject.busgo.data.RepositoryModule;
-import com.erproject.busgo.dependencyinjection.ActivityBindingModule;
+import com.erproject.busgo.di.ActivityBindingModule;
 
 import javax.inject.Singleton;
 

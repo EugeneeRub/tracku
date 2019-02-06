@@ -2,13 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.erproject.busgo">
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.INTERNET" />
+
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
 
     <application
@@ -29,10 +31,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".views.main.MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/MainTheme" />
+            android:theme="@style/AppThemeMain" />
+
         <activity
             android:name=".views.registration.RegistrationActivity"
             android:screenOrientation="portrait"
@@ -42,6 +46,11 @@
             android:name=".views.login.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/MainActivityTheme" />
+
+        <activity
+            android:name=".views.settings.SettingsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeWhiteTitleToolbar" />
 
         <service
             android:name=".services.AuthenticatorService"

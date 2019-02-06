@@ -6,6 +6,7 @@ import com.erproject.busgo.base.mvpInterfaces.BaseView;
 public interface LoginActivityContract {
     interface View extends BaseView {
         void doneLogin(String username, String password, String token);
+        void showToastError(String msg);
     }
 
     interface Presenter extends BasePresenter<View> {

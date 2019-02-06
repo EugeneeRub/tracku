@@ -17,11 +17,10 @@ public class AuthController {
     public static Account getUserAccount(Context context) {
         AccountManager accountManager = AccountManager.get(context);
         Account account = null;
-
         try {
             account = accountManager.getAccountsByType(TYPE_ACCOUNT)[0];
-        } catch (Exception ignored) {
-
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return account;
     }
@@ -33,7 +32,8 @@ public class AuthController {
         return accountManager.peekAuthToken(account, TYPE_ACCOUNT);
     }
 
-    public static void removeAccount(Context context, Account account) {
+    public static void removeAccount(Context context) {
+        Account account = getUserAccount(context);
         AccountManager accountManager = AccountManager.get(context);
         if (account != null)
             accountManager.removeAccount(account, null, null);

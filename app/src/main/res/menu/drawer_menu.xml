@@ -1,20 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!--<item android:title="@string/general">-->
-        <!--<menu>-->
-            <!--<item-->
-                <!--android:id="@+id/menu_city"-->
-                <!--android:title="@string/city" />-->
-            <!--<item-->
-                <!--android:id="@+id/menu_schedule_n_routes"-->
-                <!--android:title="@string/schedule_and_routes" />-->
-        <!--</menu>-->
-    <!--</item>-->
+    <item android:title="@string/general">
+        <menu>
+            <item
+                android:id="@+id/menu_map"
+                android:title="@string/map" />
+            <item
+                android:id="@+id/menu_start_track"
+                android:title="@string/start_track" />
+            <item
+                android:id="@+id/menu_check_track"
+                android:title="@string/monitor_users" />
+        </menu>
+    </item>
 
-    <group  android:id="@+id/group4">
+    <item
+        android:id="@+id/menu_settings"
+        android:title="@string/settings" />
+
+    <group android:id="@+id/group2">
         <item
-            android:id="@+id/menu_exit"
-            android:title="@string/exit" />
+            android:id="@+id/menu_log_out"
+            android:title="@string/string_log_out" />
     </group>
 </menu>

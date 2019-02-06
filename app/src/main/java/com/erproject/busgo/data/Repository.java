@@ -8,7 +8,6 @@ import android.support.annotation.NonNull;
 import com.erproject.busgo.data.annotations.Remote;
 import com.erproject.busgo.data.data.request.UserRegistrationRequest;
 import com.erproject.busgo.data.data.responses.BaseResponse;
-import com.erproject.busgo.data.data.responses.CityFinderResponse;
 import com.erproject.busgo.data.source.Source;
 
 import java.net.ConnectException;
@@ -19,25 +18,16 @@ import javax.inject.Singleton;
 import rx.Observable;
 
 @Singleton
-public class Repository implements Source.ICityFinder, Source.IAuth {
+public class Repository implements  Source.IAuth {
 
-    private final Source.ICityFinder mCityFinder;
     private final Source.IAuth mAuth;
     @Inject
     Application context;
 
     @Inject
-    Repository(@Remote Source.ICityFinder mCityFinder,
-               @Remote Source.IAuth mAuth) {
-        this.mCityFinder = mCityFinder;
+    Repository(
+            @Remote Source.IAuth mAuth) {
         this.mAuth = mAuth;
-    }
-
-    @NonNull
-    @Override
-    public Observable<CityFinderResponse> getCityByIp() {
-        if (isInternetConnection()) return mCityFinder.getCityByIp();
-        else return rx.Observable.error(new ConnectException("Internet connection is lost!"));
     }
 
     private boolean isInternetConnection() {

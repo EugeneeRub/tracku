@@ -1,10 +1,11 @@
-package com.erproject.busgo.dependencyinjection;
+package com.erproject.busgo.di;
 
-import com.erproject.busgo.dependencyinjection.scoped.ActivityScoped;
+import com.erproject.busgo.di.scoped.ActivityScoped;
 import com.erproject.busgo.views.login.LoginActivity;
 import com.erproject.busgo.views.main.MainActivity;
 import com.erproject.busgo.views.main.MainActivityModule;
 import com.erproject.busgo.views.registration.RegistrationActivity;
+import com.erproject.busgo.views.settings.SettingsActivity;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -19,9 +20,13 @@ public abstract class ActivityBindingModule {
 
     @ActivityScoped
     @ContributesAndroidInjector()
-    abstract RegistrationActivity registrationActivity();
+    abstract RegistrationActivity bindRegistrationActivity();
 
     @ActivityScoped
     @ContributesAndroidInjector()
-    abstract LoginActivity loginActivity();
+    abstract LoginActivity bindLoginActivity();
+
+    @ActivityScoped
+    @ContributesAndroidInjector()
+    abstract SettingsActivity bindSettingsActivity();
 }

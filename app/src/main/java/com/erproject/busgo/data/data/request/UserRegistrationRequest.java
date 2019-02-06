@@ -3,14 +3,10 @@ package com.erproject.busgo.data.data.request;
 import com.google.gson.annotations.SerializedName;
 
 public class UserRegistrationRequest {
-    @SerializedName("email")
-    private String mEmail;
-    @SerializedName("password")
-    private String mPassword;
-    @SerializedName("phoneNumber")
-    private String mPhoneNumber;
-    @SerializedName("username")
-    private String mUsername;
+    @SerializedName("email") private String mEmail;
+    @SerializedName("password") private String mPassword;
+    @SerializedName("phoneNumber") private String mPhoneNumber;
+    @SerializedName("username") private String mUsername;
 
     public UserRegistrationRequest(String mUsername, String mEmail, String mPassword, String mPhoneNumber) {
         this.mEmail = mEmail;

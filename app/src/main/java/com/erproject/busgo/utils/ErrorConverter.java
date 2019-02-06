@@ -30,17 +30,20 @@ public class ErrorConverter {
     }
 
     public static String getMsgFromCode(Throwable e) {
-        int code = ((HttpException) e).code();
-        String msg = "";
-        switch (code) {
-            case 401:
-                msg = "User does not exist";
-                break;
-            case 403:
-            case 404:
-                msg = "Something went wrong on the server";
-                break;
-        }
-        return msg;
+        if (e instanceof HttpException) {
+            int code = ((HttpException) e).code();
+            String msg;
+            switch (code) {
+                case 401:
+                    msg = "User does not exist";
+                    break;
+                case 403:
+                case 404:
+                default:
+                    msg = "Something went wrong on the server";
+                    break;
+            }
+            return msg;
+        } else return "Something went wrong on the server";
     }
 }

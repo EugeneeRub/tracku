@@ -25,7 +25,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="64dp"
         android:layout_marginEnd="8dp"
-        android:text="@string/sign_up"
+        android:text="@string/string_sign_up"
         android:textColor="@android:color/white"
         android:textSize="@dimen/_24sp"
         android:textStyle="bold"
@@ -49,7 +49,7 @@
             android:id="@+id/etl_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/username"
+            android:hint="@string/string_username"
             android:paddingStart="@dimen/_16dp"
             android:paddingEnd="@dimen/_16dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -71,7 +71,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_8dp"
-            android:hint="@string/email"
+            android:hint="@string/string_email"
             android:paddingStart="@dimen/_16dp"
             android:paddingEnd="@dimen/_16dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -93,7 +93,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_8dp"
-            android:hint="@string/phone"
+            android:hint="@string/string_phone"
             android:paddingStart="@dimen/_16dp"
             android:paddingEnd="@dimen/_16dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -115,7 +115,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_8dp"
-            android:hint="@string/password"
+            android:hint="@string/string_password"
             android:paddingStart="@dimen/_16dp"
             android:paddingEnd="@dimen/_16dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -143,7 +143,7 @@
         android:layout_marginTop="@dimen/_16dp"
         android:layout_marginEnd="@dimen/_64dp"
         android:background="@color/colorGrayTransparent"
-        android:text="@string/sign_up"
+        android:text="@string/string_sign_up"
         android:textAllCaps="false"
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
@@ -164,7 +164,7 @@
             android:id="@+id/desc_not_has_account"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/have_an_account"
+            android:text="@string/string_have_an_account"
             android:textColor="@android:color/darker_gray" />
 
         <TextView
@@ -176,7 +176,7 @@
             android:background="?attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
-            android:text="@string/login"
+            android:text="@string/string_login"
             android:textColor="@android:color/white" />
 
     </LinearLayout>
