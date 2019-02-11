@@ -26,4 +26,12 @@
     <string name="monitor_users">Monitor users</string>
     <string name="map">Map</string>
     <string name="general">General</string>
+    <string name="allow_observation">Allow observation</string>
+    <string name="allow_transfer_data">Allow transfer data</string>
+    <string name="string_unique_code">Unique code</string>
+    <string name="string_unique_code_warning">A unique code is used to enter the tracking mode of the location of your registered users.\n\nPassing code is not recommended, except to those whom you trust for the safety of your and your users.</string>
+    <string name="string_unique_code_warning2">This feature allows you to track the current location of your registered users.\n\nTo log in and confirm that you are the account creator, enter the unique key entered in the registration</string>
+    <string name="string_monitor_users_mode">Monitor users mode</string>
+    <string name="string_next">Next</string>
+    <string name="string_enter_the_unique_code">Enter the unique code</string>
 </resources>

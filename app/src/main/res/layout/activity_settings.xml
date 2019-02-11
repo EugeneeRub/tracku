@@ -7,10 +7,55 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:titleTextColor="@android:color/white" />
+
+    <TextView
+        android:id="@+id/text_view_title_theme"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="8dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="8dp"
+        android:paddingBottom="8dp"
+        android:text="Theme"
+        android:textAllCaps="true"
+        android:textColor="?attr/colorPrimaryText"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_title_theme">
+
+        <RadioButton
+            android:id="@+id/activity_settings_day_theme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Light"
+            android:textColor="?attr/colorPrimaryText"
+            android:textStyle="bold"
+            app:buttonTint="?attr/colorPrimaryText" />
+
+        <RadioButton
+            android:id="@+id/activity_settings_night_theme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dark"
+            android:textColor="?attr/colorPrimaryText"
+            android:textStyle="bold"
+            app:buttonTint="?attr/colorPrimaryText" />
+
+    </RadioGroup>
 
 </android.support.constraint.ConstraintLayout>

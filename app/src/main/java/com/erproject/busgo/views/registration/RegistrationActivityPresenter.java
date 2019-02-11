@@ -41,8 +41,10 @@ public class RegistrationActivityPresenter implements RegistrationActivityContra
     }
 
     @Override
-    public void sendRegistration(final String username, final String email, final String phone, final String password) {
-        final UserRegistrationRequest user = new UserRegistrationRequest(username, email, password, phone);
+    public void sendRegistration(final String username, final String email, final String phone,
+                                 final String password, final String unique) {
+        final UserRegistrationRequest user =
+                new UserRegistrationRequest(username, email, password, unique, phone);
         mRepository.signUp(user).subscribe(new Subscriber<BaseResponse>() {
             @Override
             public void onCompleted() {
@@ -73,15 +75,16 @@ public class RegistrationActivityPresenter implements RegistrationActivityContra
         Map<String, Object> map = new HashMap<>();
         map.put(user.getmUsername(), new FbConnectedUser());
         fbUser.setMapOfUsers(map);
+        fbUser.setmUniqueCode(user.getmUniqueCode());
 
         //add first user
         mDatabase.child("users").child(emailSplited[0]).setValue(fbUser)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                mView.doneRegistration(user.getmEmail(), user.getmPassword(), token);
-            }
-        }).addOnCanceledListener(new OnCanceledListener() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        mView.doneRegistration(user.getmEmail(), user.getmPassword(), token);
+                    }
+                }).addOnCanceledListener(new OnCanceledListener() {
             @Override
             public void onCanceled() {
                 mView.showError(ErrorConverter.getMsgFromCode(new Throwable()));

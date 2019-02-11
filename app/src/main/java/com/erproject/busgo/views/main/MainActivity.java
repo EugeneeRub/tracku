@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.erproject.busgo.R;
 import com.erproject.busgo.base.BaseActivityDagger;
+import com.erproject.busgo.dialogs.EnterCodeDialog;
 import com.erproject.busgo.services.authManager.AuthController;
 import com.erproject.busgo.utils.GPSChecker;
 import com.erproject.busgo.views.login.LoginActivity;
@@ -30,7 +31,8 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends BaseActivityDagger implements NavigationView.OnNavigationItemSelectedListener, MainActivityContract.View {
+public class MainActivity extends BaseActivityDagger
+        implements NavigationView.OnNavigationItemSelectedListener, MainActivityContract.View {
 
     @BindView(R.id.drawer_layout)
     DrawerLayout drawer;
@@ -52,6 +54,9 @@ public class MainActivity extends BaseActivityDagger implements NavigationView.O
     MapFragment mMapFragment;
     //region FRAGMENTS
 
+    @Inject
+    EnterCodeDialog mEnterCodeDialog;
+
     public static Intent newInstance(Context context) {
         return new Intent(context, MainActivity.class);
     }
@@ -59,9 +64,11 @@ public class MainActivity extends BaseActivityDagger implements NavigationView.O
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme();
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        setToolbarTitle(getString(R.string.map));
         checkGPS();
         setUpNavigationView();
     }
@@ -82,18 +89,20 @@ public class MainActivity extends BaseActivityDagger implements NavigationView.O
 
         navigationView.setNavigationItemSelectedListener(this);
 
-        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.string_open_drawer, R.string.string_close_drawer) {
+        ActionBarDrawerToggle actionBarDrawerToggle =
+                new ActionBarDrawerToggle(this, drawer, toolbar, R.string.string_open_drawer,
+                        R.string.string_close_drawer) {
 
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                super.onDrawerClosed(drawerView);
-            }
+                    @Override
+                    public void onDrawerClosed(View drawerView) {
+                        super.onDrawerClosed(drawerView);
+                    }
 
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-            }
-        };
+                    @Override
+                    public void onDrawerOpened(View drawerView) {
+                        super.onDrawerOpened(drawerView);
+                    }
+                };
 
         actionBarDrawerToggle.getDrawerArrowDrawable().setColor(Color.WHITE);
         actionBarDrawerToggle.getDrawerArrowDrawable().setColor(Color.WHITE);
@@ -105,16 +114,18 @@ public class MainActivity extends BaseActivityDagger implements NavigationView.O
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_map:
+                setToolbarTitle(getString(R.string.map));
                 showFragmentOrRestore(R.id.container, mMapFragment, "MAP_FRAGMENT");
                 drawer.closeDrawers();
                 return true;
             case R.id.menu_start_track:
-                showFragmentOrRestore2(R.id.container2, mStartTrackFragment, "START_TRACK_FRAGMENT");
+                setToolbarTitle(getString(R.string.start_track));
+                showFragmentOrRestore2(R.id.container2, mStartTrackFragment,
+                        "START_TRACK_FRAGMENT");
                 drawer.closeDrawers();
                 return true;
             case R.id.menu_check_track:
-                showFragmentOrRestore2(R.id.container2, mLoadTrackFragment, "LOAD_TRACK_FRAGMENT");
-                drawer.closeDrawers();
+                showCheckFragment();
                 return true;
             case R.id.menu_log_out:
                 AuthController.removeAccount(this);
@@ -129,7 +140,35 @@ public class MainActivity extends BaseActivityDagger implements NavigationView.O
                 return true;
         }
     }
+
+    private void showCheckFragment() {
+        if (presenter.isUserEnterTheUniqueCode()) {
+            setToolbarTitle(getString(R.string.monitor_users));
+            showFragmentOrRestore2(R.id.container2, mLoadTrackFragment, "LOAD_TRACK_FRAGMENT");
+            drawer.closeDrawers();
+        } else {
+            mEnterCodeDialog.setmCallback(new EnterCodeDialog.OnCheckCallback() {
+                @Override
+                public void checkCode(String code) {
+                    if (presenter.checkAndSaveEnteredUniqueCode(code)) {
+                        mEnterCodeDialog.dismiss();
+                        showCheckFragment();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Codes don`t match",
+                                Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+            });
+            mEnterCodeDialog.show(getSupportFragmentManager(), "ENTER_CODE_DIALOG");
+        }
+    }
     //endregion NAVIGATION SETUP
+
+    private void setToolbarTitle(@NonNull String title) {
+        if (getSupportActionBar() == null) setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) getSupportActionBar().setTitle(title);
+    }
 
     @Override
     protected void onResume() {
@@ -146,5 +185,15 @@ public class MainActivity extends BaseActivityDagger implements NavigationView.O
     @Override
     public void showError(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void goToLogin() {
+        startLoginActivity();
+    }
+
+    @Override
+    public Context getmContext() {
+        return this;
     }
 }

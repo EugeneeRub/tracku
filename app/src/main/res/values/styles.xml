@@ -4,37 +4,55 @@
         <item name="android:windowBackground">@drawable/splash_theme</item>
     </style>
 
-    <style name="MainActivityTheme" parent="Theme.AppCompat.NoActionBar" />
+    <style name="AuthTheme" parent="Theme.AppCompat.Light.NoActionBar" />
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+    <!-- region Theme type -->
+    <style name="ActivityTheme.Primary.Base.Light" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryText">@color/colorPrimaryText_Light</item>
         <item name="android:colorBackground">@android:color/white</item>
     </style>
 
-    <style name="TextAppearence.App.TextInputLayout" parent="@android:style/TextAppearance">
+    <style name="ActivityTheme.Primary.Base.Dark" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary_Dark</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark_Dark</item>
+        <item name="colorAccent">@color/colorAccent_Dark</item>
+        <item name="colorPrimaryText">@color/colorPrimaryText_Dark</item>
+        <item name="android:colorBackground">@color/colorAccent_Dark</item>
+    </style>
+
+    <style name="ThemeLight" parent="ActivityTheme.Primary.Base.Light" />
+
+    <style name="ThemeDark" parent="ActivityTheme.Primary.Base.Dark" />
+
+    <!-- endregion Theme type -->
+
+    <!--region Text style-->
+    <style name="TextHintAppearence.App.TextInputLayout" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="TextAppearence.App.TextInputLayout" parent="Widget.Design.TextInputLayout">
+        <item name="hintTextAppearance">@style/TextHintAppearence.App.TextInputLayout</item>
+        <item name="errorTextAppearance">@style/TextErrorAppearence.App.TextInputLayout</item>
+
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColorHint">@android:color/white</item>
+
         <item name="colorControlNormal">@android:color/white</item>
         <item name="colorControlActivated">@android:color/white</item>
         <item name="colorControlHighlight">@android:color/white</item>
     </style>
 
-    <style name="AppThemeMain" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+    <style name="TextErrorAppearence.App.TextInputLayout" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/colorWarmRed</item>
     </style>
+    <!--endregion Text style-->
 
-    <style name="AppThemeWhiteTitleToolbar" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="android:textColorPrimary">@android:color/white</item>
-        <item name="colorAccent">@color/colorAccent</item>
+    <style name="myDialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowNoTitle">true</item>
     </style>
 
 </resources>

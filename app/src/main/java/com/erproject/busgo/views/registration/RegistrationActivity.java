@@ -1,10 +1,14 @@
 package com.erproject.busgo.views.registration;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AlertDialog;
+import android.view.ContextThemeWrapper;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -45,7 +49,12 @@ public class RegistrationActivity extends BaseActivityDagger
     TextInputLayout mLayoutPhone;
     @BindView(R.id.et_phone)
     FixedTextInputEditText mEtPhone;
-    //email
+    //unique code
+    @BindView(R.id.etl_unique_code)
+    TextInputLayout mLayoutUniqueCode;
+    @BindView(R.id.et_unique_code)
+    FixedTextInputEditText mEtUniqueCode;
+    //password
     @BindView(R.id.etl_password)
     TextInputLayout mLayoutPassword;
     @BindView(R.id.et_password)
@@ -56,6 +65,8 @@ public class RegistrationActivity extends BaseActivityDagger
     ProgressBar mProgress;
     @BindView(R.id.text_error)
     TextView mTextError;
+
+    AlertDialog.Builder builder;
 
     public static Intent newInstance(Context context) {
         return new Intent(context, RegistrationActivity.class);
@@ -79,6 +90,12 @@ public class RegistrationActivity extends BaseActivityDagger
         mLayoutPhone.setError(null);
     }
 
+    @OnTextChanged(R.id.et_unique_code)
+    public void changedTextUniqeCode() {
+        mLayoutUniqueCode.setErrorEnabled(false);
+        mLayoutUniqueCode.setError(null);
+    }
+
     @OnTextChanged(R.id.et_password)
     public void changedTextPassword() {
         mLayoutPassword.setErrorEnabled(false);
@@ -91,17 +108,18 @@ public class RegistrationActivity extends BaseActivityDagger
     }
 
     @OnClick(R.id.btn_resume)
+    @SuppressWarnings("all")
     public void onRegisterClicked() {
         mTextError.setVisibility(View.GONE);
         if (checkValid()) {
             mProgress.setVisibility(View.VISIBLE);
             mPresenter.sendRegistration(mEtUsername.getText().toString(),
-                    mEtEmail.getText().toString(),
-                    mEtPhone.getText().toString(),
-                    mEtPassword.getText().toString());
+                    mEtEmail.getText().toString(), mEtPhone.getText().toString(),
+                    mEtPassword.getText().toString(), mEtUniqueCode.getText().toString());
         }
     }
 
+    @SuppressWarnings("all")
     private boolean checkValid() {
         boolean isCanLogin = true;
         int validCounter = 0;
@@ -124,6 +142,17 @@ public class RegistrationActivity extends BaseActivityDagger
             mLayoutEmail.setError("Email isn`t correct");
         }
 
+        if (mEtUniqueCode.getText().toString().isEmpty()) {
+            validCounter++;
+            mLayoutUniqueCode.setError("Unique code is empty");
+        } else {
+            if (mEtUniqueCode.getText().toString().equals(mEtPassword.getText().toString())) {
+                validCounter++;
+                mLayoutUniqueCode.setError("Unique code can not match the password");
+            }
+        }
+
+
         if (mEtPassword.getText().toString().isEmpty()) {
             validCounter++;
             mLayoutPassword.setError("Password is empty");
@@ -132,8 +161,7 @@ public class RegistrationActivity extends BaseActivityDagger
             mLayoutPassword.setError("Password must be more than 6 characters.");
         }
 
-        if (validCounter > 0)
-            isCanLogin = false;
+        if (validCounter > 0) isCanLogin = false;
 
         return isCanLogin;
     }
@@ -143,6 +171,8 @@ public class RegistrationActivity extends BaseActivityDagger
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
         ButterKnife.bind(this);
+
+        prepareUniqueAlertNotification();
     }
 
     @Override
@@ -150,6 +180,11 @@ public class RegistrationActivity extends BaseActivityDagger
         mProgress.setVisibility(View.GONE);
         mTextError.setVisibility(View.VISIBLE);
         mTextError.setText(msg);
+    }
+
+    @Override
+    public void goToLogin() {
+        //gag
     }
 
     @Override
@@ -185,5 +220,28 @@ public class RegistrationActivity extends BaseActivityDagger
     protected void onDestroy() {
         super.onDestroy();
         mPresenter.dropView();
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private void prepareUniqueAlertNotification() {
+        builder = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.myDialog));
+
+        mEtUniqueCode.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    if (event.getRawX() >= (mEtUniqueCode.getRight() -
+                            mEtUniqueCode.getCompoundDrawables()[2].getBounds().width())) {
+                        builder.setTitle("Unique code?");
+
+                        builder.setMessage(R.string.string_unique_code_warning);
+                        builder.setPositiveButton(R.string.string_ok, null);
+                        builder.show();
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
     }
 }

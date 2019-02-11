@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.erproject.busgo.R;
 import com.erproject.busgo.data.data.simpleData.InterestingPhrase;
+import com.erproject.busgo.data.exceptions.UserNotFoundException;
 import com.erproject.busgo.services.authManager.AuthController;
 import com.erproject.busgo.views.login.LoginActivity;
 import com.erproject.busgo.views.main.MainActivity;
@@ -95,16 +96,16 @@ public class SplashScreenActivity extends AppCompatActivity {
 
     private void animateLogo() {
         logoAnimatorSet = new AnimatorSet();
-        logoAnimatorSet.play(ObjectAnimator.ofFloat(mainLayout,
-                "alpha", 0, 0.7f));
+        logoAnimatorSet.play(ObjectAnimator.ofFloat(mainLayout, "alpha", 0, 0.7f));
         logoAnimatorSet.setDuration(3000);
         logoAnimatorSet.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
-                if (AuthController.getToken(getApplicationContext()) != null) {
-                    goToMain();
-                } else {
+                try {
+                    if (AuthController.getToken(getApplicationContext()) != null) goToMain();
+                    else goToLogin();
+                } catch (UserNotFoundException e) {
                     goToLogin();
                 }
             }
@@ -114,15 +115,13 @@ public class SplashScreenActivity extends AppCompatActivity {
     }
 
     public void goToMain() {
-        if (logoAnimatorSet != null && logoAnimatorSet.isRunning())
-            logoAnimatorSet.cancel();
+        if (logoAnimatorSet != null && logoAnimatorSet.isRunning()) logoAnimatorSet.cancel();
         startActivity(MainActivity.newInstance(this));
         finish();
     }
 
     public void goToLogin() {
-        if (logoAnimatorSet != null && logoAnimatorSet.isRunning())
-            logoAnimatorSet.cancel();
+        if (logoAnimatorSet != null && logoAnimatorSet.isRunning()) logoAnimatorSet.cancel();
         startActivity(LoginActivity.newInstance(this));
         finish();
     }

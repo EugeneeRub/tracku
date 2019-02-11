@@ -1,21 +1,17 @@
 package com.erproject.busgo.data.data.request.fbRegistration;
 
 import com.google.firebase.database.Exclude;
-import com.google.firebase.database.PropertyName;
+import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@IgnoreExtraProperties
 public class FbConnectedUser {
-    @PropertyName("latitude")
     private Double mLatitude = 0d;
-    @PropertyName("longitude")
     private Double mLongitude = 0d;
-    @PropertyName("last_time")
     private String mLastTimeActive = "";// 01.01.2018 11:10
-    @PropertyName("phone")
     private String mPhone = "";
-    @PropertyName("is_tracking")
     private Boolean mIsTracking = false;
 
     public FbConnectedUser() {

@@ -5,6 +5,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
+import com.erproject.busgo.views.login.LoginActivity;
+
 import java.util.Objects;
 
 import dagger.android.support.DaggerFragment;
@@ -52,5 +54,10 @@ public abstract class BaseFragmentDagger extends DaggerFragment {
         for (Fragment fragment : fragmentManager.getFragments()) {
             fragmentTransaction.hide(fragment);
         }
+    }
+
+    public void startLoginActivity() {
+        startActivity(LoginActivity.newInstance(getContext()));
+        Objects.requireNonNull(getActivity()).finish();
     }
 }

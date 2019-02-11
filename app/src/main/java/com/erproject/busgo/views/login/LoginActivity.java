@@ -117,6 +117,11 @@ public class LoginActivity extends BaseActivityDagger implements LoginActivityCo
     }
 
     @Override
+    public void goToLogin() {
+        //gag
+    }
+
+    @Override
     public void showToastError(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }

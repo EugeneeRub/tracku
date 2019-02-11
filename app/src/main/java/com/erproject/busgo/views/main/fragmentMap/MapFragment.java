@@ -18,13 +18,11 @@ import com.mapbox.android.core.location.LocationEngineRequest;
 import com.mapbox.android.core.location.LocationEngineResult;
 import com.mapbox.android.core.permissions.PermissionsListener;
 import com.mapbox.android.core.permissions.PermissionsManager;
-import com.mapbox.mapboxsdk.camera.CameraPosition;
 import com.mapbox.mapboxsdk.location.LocationComponent;
 import com.mapbox.mapboxsdk.location.modes.CameraMode;
 import com.mapbox.mapboxsdk.location.modes.RenderMode;
 import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
-import com.mapbox.mapboxsdk.maps.MapboxMapOptions;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.mapboxsdk.maps.Style;
 
@@ -40,7 +38,8 @@ import butterknife.ButterKnife;
 
 import static android.os.Looper.getMainLooper;
 
-public class MapFragment extends BaseFragmentDagger implements MapContract.View, LocationEngineCallback<LocationEngineResult> {
+public class MapFragment extends BaseFragmentDagger
+        implements MapContract.View, LocationEngineCallback<LocationEngineResult> {
 
     @BindView(R.id.fragment_map_map)
     MapView mMapView;
@@ -52,7 +51,8 @@ public class MapFragment extends BaseFragmentDagger implements MapContract.View,
     private PermissionsManager mPermissonManager;
     private LocationEngine locationEngine;
 
-    private LocationEngineRequest request = new LocationEngineRequest.Builder(5_000).setPriority(LocationEngineRequest.PRIORITY_NO_POWER).setMaxWaitTime(60_000).build();
+    private LocationEngineRequest request = new LocationEngineRequest.Builder(5_000)
+            .setPriority(LocationEngineRequest.PRIORITY_NO_POWER).setMaxWaitTime(30_000).build();
 
     @Inject
     public MapFragment() {
@@ -60,7 +60,8 @@ public class MapFragment extends BaseFragmentDagger implements MapContract.View,
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_map, container, false);
         ButterKnife.bind(this, view);
         mMapView.onCreate(savedInstanceState);
@@ -71,13 +72,14 @@ public class MapFragment extends BaseFragmentDagger implements MapContract.View,
     }
 
     private void setupMap() {
-        MapboxMapOptions options = new MapboxMapOptions();
-        options.camera(new CameraPosition.Builder().zoom(15).build());
-
         mMapView.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(@NonNull MapboxMap mapboxMap) {
                 mMapboxMap = mapboxMap;
+
+                mMapboxMap.setMaxZoomPreference(25);
+                mMapboxMap.setMinZoomPreference(15);
+
                 mMapboxMap.setStyle(Style.MAPBOX_STREETS, new Style.OnStyleLoaded() {
                     @Override
                     public void onStyleLoaded(@NonNull Style style) {
@@ -94,9 +96,10 @@ public class MapFragment extends BaseFragmentDagger implements MapContract.View,
             LocationComponent locationComponent = mMapboxMap.getLocationComponent();
 
             locationEngine = LocationEngineProvider.getBestLocationEngine(getContext());
-            locationComponent.activateLocationComponent(getContext(), Objects.requireNonNull(mMapboxMap.getStyle()));
+            locationComponent.activateLocationComponent(getContext(),
+                    Objects.requireNonNull(mMapboxMap.getStyle()));
             locationComponent.setLocationComponentEnabled(true);
-            locationComponent.setCameraMode(CameraMode.TRACKING);
+            locationComponent.setCameraMode(CameraMode.TRACKING_GPS);
             locationComponent.setRenderMode(RenderMode.COMPASS);
 
             locationEngine.requestLocationUpdates(request, this, getMainLooper());
@@ -119,10 +122,10 @@ public class MapFragment extends BaseFragmentDagger implements MapContract.View,
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
         mPermissonManager.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
-
 
     @Override
     public void onResume() {
@@ -167,11 +170,17 @@ public class MapFragment extends BaseFragmentDagger implements MapContract.View,
 
     }
 
+    @Override
+    public void goToLogin() {
+        startLoginActivity();
+    }
+
     //region LOCATION CALLBACKS
     @Override
     public void onSuccess(LocationEngineResult result) {
         Toast.makeText(getContext(), "Point updated", Toast.LENGTH_SHORT).show();
         Location lastLocation = result.getLastLocation();
+
     }
 
     @Override

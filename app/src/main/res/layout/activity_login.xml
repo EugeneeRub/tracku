@@ -9,7 +9,6 @@
         android:id="@+id/back_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:foreground="@color/colorGrayDarkTransparent"
         android:scaleType="centerCrop"
         android:src="@drawable/bus6"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -17,6 +16,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ContentDescription" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorGrayDarkTransparent" />
 
     <TextView
         android:id="@+id/textView"
@@ -52,6 +56,7 @@
             android:hint="@string/string_email"
             android:paddingStart="@dimen/_16dp"
             android:paddingEnd="@dimen/_16dp"
+            android:theme="@style/TextAppearence.App.TextInputLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
@@ -62,7 +67,7 @@
                 android:imeOptions="actionNext"
                 android:inputType="textEmailAddress"
                 android:nextFocusForward="@+id/et_password"
-                android:theme="@style/TextAppearence.App.TextInputLayout" />
+                android:textColor="@android:color/white" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -74,6 +79,7 @@
             android:hint="@string/string_password"
             android:paddingStart="@dimen/_16dp"
             android:paddingEnd="@dimen/_16dp"
+            android:theme="@style/TextAppearence.App.TextInputLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:passwordToggleEnabled="true"
@@ -85,8 +91,8 @@
                 android:layout_height="wrap_content"
                 android:imeOptions="actionDone"
                 android:inputType="textPassword"
-                android:nextFocusForward="@+id/etPasswordLayoutSignIn"
-                android:theme="@style/TextAppearence.App.TextInputLayout" />
+                android:nextFocusForward="@+id/btn_resume"
+                android:textColor="@android:color/white" />
 
         </android.support.design.widget.TextInputLayout>
     </LinearLayout>

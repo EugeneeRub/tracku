@@ -1,21 +1,24 @@
 package com.erproject.busgo.data.data.request.fbRegistration;
 
-import com.google.firebase.database.PropertyName;
+import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.util.Map;
 
+@IgnoreExtraProperties
 public class FbUserRegistration {
-    @PropertyName("register_phone") private String mRegisterPhone;
-    @PropertyName("email_suffix") private String mEmailSuffix;
-    @PropertyName("child_users") private Map<String, Object> mapOfUsers;
+    private String mRegisterPhone;
+    private String mEmailSuffix;
+    private String mUniqueCode;
+    private Map<String, Object> mapOfUsers;
 
     public FbUserRegistration() {
     }
 
-    public FbUserRegistration(String mRegisterPhone, String mEmailSuffix,
+    public FbUserRegistration(String mRegisterPhone, String mEmailSuffix, String mUniqueCode,
                               Map<String, Object> mapOfUsers) {
         this.mRegisterPhone = mRegisterPhone;
         this.mEmailSuffix = mEmailSuffix;
+        this.mUniqueCode = mUniqueCode;
         this.mapOfUsers = mapOfUsers;
     }
 
@@ -41,5 +44,13 @@ public class FbUserRegistration {
 
     public void setMapOfUsers(Map<String, Object> mapOfUsers) {
         this.mapOfUsers = mapOfUsers;
+    }
+
+    public String getmUniqueCode() {
+        return mUniqueCode;
+    }
+
+    public void setmUniqueCode(String mUniqueCode) {
+        this.mUniqueCode = mUniqueCode;
     }
 }
