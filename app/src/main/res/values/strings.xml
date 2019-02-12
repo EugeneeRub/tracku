@@ -34,4 +34,7 @@
     <string name="string_monitor_users_mode">Monitor users mode</string>
     <string name="string_next">Next</string>
     <string name="string_enter_the_unique_code">Enter the unique code</string>
+    <string name="string_close">Close</string>
+    <string name="string_edit_your_users">Edit your users</string>
+    <string name="string_choose_user">Choose user</string>
 </resources>

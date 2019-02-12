@@ -36,15 +36,14 @@ public class MainActivity extends BaseActivityDagger
 
     @BindView(R.id.drawer_layout)
     DrawerLayout drawer;
-
     @BindView(R.id.nav_view)
     NavigationView navigationView;
-
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
     @Inject
     MainActivityPresenter presenter;
+
     //region FRAGMENTS
     @Inject
     StartTrackFragment mStartTrackFragment;
@@ -52,7 +51,7 @@ public class MainActivity extends BaseActivityDagger
     LoadTrackFragment mLoadTrackFragment;
     @Inject
     MapFragment mMapFragment;
-    //region FRAGMENTS
+    //endregion FRAGMENTS
 
     @Inject
     EnterCodeDialog mEnterCodeDialog;
@@ -122,6 +121,10 @@ public class MainActivity extends BaseActivityDagger
                 drawer.closeDrawers();
                 return true;
             case R.id.menu_start_track:
+                if (getSupportFragmentManager().findFragmentByTag("MAP_FRAGMENT") != null) {
+                    mMapFragment.enableLocationCallback();
+                }
+
                 setToolbarTitle(getString(R.string.start_track));
                 showFragmentOrRestore2(R.id.container2, mStartTrackFragment,
                         "START_TRACK_FRAGMENT");

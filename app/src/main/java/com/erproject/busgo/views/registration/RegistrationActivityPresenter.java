@@ -69,16 +69,16 @@ public class RegistrationActivityPresenter implements RegistrationActivityContra
     private void registerUserInFirebase(final UserRegistrationRequest user, final String token) {
         FbUserRegistration fbUser = new FbUserRegistration();
         //base data
-        String[] emailSplited = user.getmEmail().split("@");
-        fbUser.setmEmailSuffix(emailSplited[1]);
+        String[] emailSplitted = user.getmEmail().split("@");
+        fbUser.setmEmailSuffix(emailSplitted[1]);
         fbUser.setmRegisterPhone(user.getmPhoneNumber());
         Map<String, Object> map = new HashMap<>();
-        map.put(user.getmUsername(), new FbConnectedUser());
+        map.put("User 1", new FbConnectedUser());
         fbUser.setMapOfUsers(map);
         fbUser.setmUniqueCode(user.getmUniqueCode());
 
         //add first user
-        mDatabase.child("users").child(emailSplited[0]).setValue(fbUser)
+        mDatabase.child("users").child(emailSplitted[0]).setValue(fbUser)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

@@ -13,11 +13,13 @@ public class FbConnectedUser {
     private String mLastTimeActive = "";// 01.01.2018 11:10
     private String mPhone = "";
     private Boolean mIsTracking = false;
+    private Boolean mIsUsed = false;
 
     public FbConnectedUser() {
     }
 
-    public FbConnectedUser(Double mLatitude, Double mLongitude, String mLastTimeActive, String mPhone) {
+    public FbConnectedUser(Double mLatitude, Double mLongitude, String mLastTimeActive,
+                           String mPhone) {
         this.mLatitude = mLatitude;
         this.mLongitude = mLongitude;
         this.mLastTimeActive = mLastTimeActive;
@@ -73,5 +75,13 @@ public class FbConnectedUser {
 
     public void setmIsTracking(Boolean mIsTracking) {
         this.mIsTracking = mIsTracking;
+    }
+
+    public Boolean getmIsUsed() {
+        return mIsUsed;
+    }
+
+    public void setmIsUsed(Boolean mIsUsed) {
+        this.mIsUsed = mIsUsed;
     }
 }

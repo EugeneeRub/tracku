@@ -98,7 +98,8 @@ public class MapFragment extends BaseFragmentDagger
                 mLocationComponent.setLocationComponentEnabled(true);
                 mLocationComponent.setCameraMode(CameraMode.TRACKING_GPS);
                 mLocationComponent.setRenderMode(RenderMode.COMPASS);
-            } else mLocationComponent.onStart();
+            } else
+                mLocationComponent.onStart();
 
             mMapboxMap.setMinZoomPreference(14);
             mMapboxMap.setMaxZoomPreference(25);

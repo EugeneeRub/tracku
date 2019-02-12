@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <com.getbase.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fragment_start_track_choose_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:fab_colorNormal="@color/colorCustomWhite"
+        app:fab_icon="@drawable/ic_more_green"
+        app:fab_size="mini"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/fragment_start_track_button_start"
@@ -31,5 +42,74 @@
         app:fab_size="mini"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/fragment_start_track_card_choose"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="@dimen/_8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="@dimen/_8dp"
+        android:visibility="gone"
+        app:cardCornerRadius="@dimen/_16dp"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_start_track_button_start"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_start_track_choose_fab">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/fragment_load_track_card_edit_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="@dimen/_8dp"
+                android:layout_marginEnd="@dimen/_8dp"
+                android:layout_marginBottom="@dimen/_8dp"
+                android:background="?attr/selectableItemBackground"
+                android:padding="@dimen/_4dp"
+                android:text="@string/string_choose_user"
+                android:textColor="?attr/colorPrimaryText"
+                android:textSize="@dimen/_18sp"
+                app:layout_constraintBottom_toBottomOf="@+id/fragment_start_track_card_text"
+                app:layout_constraintEnd_toStartOf="@+id/fragment_start_track_card_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/fragment_start_track_card_text" />
+
+            <TextView
+                android:id="@+id/fragment_start_track_card_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:background="?attr/selectableItemBackground"
+                android:padding="@dimen/_4dp"
+                android:text="@string/string_close"
+                android:textColor="?attr/colorPrimaryText"
+                android:textSize="@dimen/_18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/fragment_start_track_card_list"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="@dimen/_8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_start_track_card_text" />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v7.widget.CardView>
+
 
 </android.support.constraint.ConstraintLayout>

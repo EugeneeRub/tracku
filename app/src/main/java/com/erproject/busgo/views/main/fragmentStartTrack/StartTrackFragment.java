@@ -3,6 +3,8 @@ package com.erproject.busgo.views.main.fragmentStartTrack;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,8 +23,14 @@ import butterknife.OnClick;
 public class StartTrackFragment extends BaseFragmentDagger implements StartTrackContract.View {
     @BindView(R.id.fragment_start_track_hide_all_layout)
     FloatingActionButton mImageArrow;
+    @BindView(R.id.fragment_start_track_choose_fab)
+    FloatingActionButton mChooseFab;
     @BindView(R.id.fragment_start_track_button_start)
     Button mButtonStartTrack;
+    @BindView(R.id.fragment_start_track_card_choose)
+    CardView mCardChoose;
+    @BindView(R.id.fragment_start_track_card_list)
+    RecyclerView mUsersList;
 
     private boolean isHidingAll;
 
@@ -42,13 +50,34 @@ public class StartTrackFragment extends BaseFragmentDagger implements StartTrack
         }
     }
 
+    @OnClick(R.id.fragment_start_track_choose_fab)
+    public void onChooseClicked() {
+        if (mCardChoose.getVisibility() == View.GONE) {
+            mCardChoose.setVisibility(View.VISIBLE);
+
+            mButtonStartTrack.setEnabled(false);
+            mChooseFab.setEnabled(false);
+            mImageArrow.setEnabled(false);
+        }
+    }
+
+    @OnClick(R.id.fragment_start_track_card_text)
+    public void onTextCloseClicked() {
+        mCardChoose.setVisibility(View.GONE);
+        mButtonStartTrack.setEnabled(true);
+        mChooseFab.setEnabled(true);
+        mImageArrow.setEnabled(true);
+    }
+
     private void hideByAnimAllViews() {
         mButtonStartTrack.animate().alpha(0.0f).translationY(mButtonStartTrack.getHeight());
+        mChooseFab.animate().alpha(0.0f).translationX(mChooseFab.getWidth());
     }
 
     private void showByAnimAllViews() {
         mButtonStartTrack.animate().alpha(1.0f).translationY(0);
         mButtonStartTrack.setVisibility(View.VISIBLE);
+        mChooseFab.animate().alpha(1.0f).translationX(0);
     }
 
     @Inject
@@ -75,6 +104,16 @@ public class StartTrackFragment extends BaseFragmentDagger implements StartTrack
     public void onDestroy() {
         super.onDestroy();
         mPresenter.dropView();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mCardChoose.setVisibility(View.GONE);
+
+        mButtonStartTrack.setEnabled(true);
+        mChooseFab.setEnabled(true);
+        mImageArrow.setEnabled(true);
     }
 
     @Override
