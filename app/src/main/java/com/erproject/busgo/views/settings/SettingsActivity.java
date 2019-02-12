@@ -17,30 +17,37 @@ import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 
 public class SettingsActivity extends BaseActivityDagger {
+    public static final int RESULT_CODE = 456;
+
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
-
     @BindView(R.id.activity_settings_day_theme)
     RadioButton mRbDayMode;
     @BindView(R.id.activity_settings_night_theme)
     RadioButton mRbNightMode;
+    private boolean isFirst;
+
+    public static Intent newInstance(Context context) {
+        Intent intent = new Intent(context, SettingsActivity.class);
+        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        return intent;
+    }
 
     @OnCheckedChanged({R.id.activity_settings_day_theme, R.id.activity_settings_night_theme})
     void onThemeSelected(RadioButton radioButton) {
-        if (radioButton.isChecked()) {
+        if (radioButton.isChecked() && isFirst) {
             switch (radioButton.getId()) {
                 case R.id.activity_settings_day_theme:
                     App.getInstance().setThemeMode(0);
+                    recreate();
                     break;
                 case R.id.activity_settings_night_theme:
                     App.getInstance().setThemeMode(1);
+                    recreate();
                     break;
             }
         }
-    }
-
-    public static Intent newInstance(Context context) {
-        return new Intent(context, SettingsActivity.class);
+        isFirst = true;
     }
 
     @Override
@@ -75,8 +82,14 @@ public class SettingsActivity extends BaseActivityDagger {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            finish();
+            onBackPressed();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+       // startActivity(MainActivity.newInstance(this));
     }
 }

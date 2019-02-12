@@ -23,6 +23,7 @@ public class StartTrackFragment extends BaseFragmentDagger implements StartTrack
     FloatingActionButton mImageArrow;
     @BindView(R.id.fragment_start_track_button_start)
     Button mButtonStartTrack;
+
     private boolean isHidingAll;
 
     @Inject
@@ -56,9 +57,11 @@ public class StartTrackFragment extends BaseFragmentDagger implements StartTrack
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_start_track, container, false);
         ButterKnife.bind(this, view);
+
         return view;
     }
 

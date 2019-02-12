@@ -115,6 +115,9 @@ public class MainActivity extends BaseActivityDagger
         switch (item.getItemId()) {
             case R.id.menu_map:
                 setToolbarTitle(getString(R.string.map));
+                if (getSupportFragmentManager().findFragmentByTag("MAP_FRAGMENT") != null) {
+                    mMapFragment.enableLocationCallback();
+                }
                 showFragmentOrRestore(R.id.container, mMapFragment, "MAP_FRAGMENT");
                 drawer.closeDrawers();
                 return true;
@@ -133,8 +136,8 @@ public class MainActivity extends BaseActivityDagger
                 finish();
                 return true;
             case R.id.menu_settings:
-                startActivity(SettingsActivity.newInstance(this));
                 drawer.closeDrawers();
+                startActivity(SettingsActivity.newInstance(this));
                 return true;
             default:
                 return true;
@@ -144,6 +147,7 @@ public class MainActivity extends BaseActivityDagger
     private void showCheckFragment() {
         if (presenter.isUserEnterTheUniqueCode()) {
             setToolbarTitle(getString(R.string.monitor_users));
+            mMapFragment.disableLocationCallback();
             showFragmentOrRestore2(R.id.container2, mLoadTrackFragment, "LOAD_TRACK_FRAGMENT");
             drawer.closeDrawers();
         } else {

@@ -49,7 +49,8 @@ public class MapFragment extends BaseFragmentDagger
     private MapboxMap mMapboxMap;
 
     private PermissionsManager mPermissonManager;
-    private LocationEngine locationEngine;
+    private LocationEngine mLocationEngine;
+    private LocationComponent mLocationComponent;
 
     private LocationEngineRequest request = new LocationEngineRequest.Builder(5_000)
             .setPriority(LocationEngineRequest.PRIORITY_NO_POWER).setMaxWaitTime(30_000).build();
@@ -77,9 +78,6 @@ public class MapFragment extends BaseFragmentDagger
             public void onMapReady(@NonNull MapboxMap mapboxMap) {
                 mMapboxMap = mapboxMap;
 
-                mMapboxMap.setMaxZoomPreference(25);
-                mMapboxMap.setMinZoomPreference(15);
-
                 mMapboxMap.setStyle(Style.MAPBOX_STREETS, new Style.OnStyleLoaded() {
                     @Override
                     public void onStyleLoaded(@NonNull Style style) {
@@ -93,16 +91,22 @@ public class MapFragment extends BaseFragmentDagger
     @SuppressWarnings({"MissingPermission", "all"})
     private void setupLocationCallback() {
         if (PermissionsManager.areLocationPermissionsGranted(getContext())) {
-            LocationComponent locationComponent = mMapboxMap.getLocationComponent();
+            if (mLocationComponent == null) {
+                mLocationComponent = mMapboxMap.getLocationComponent();
+                mLocationComponent.activateLocationComponent(getContext(),
+                        Objects.requireNonNull(mMapboxMap.getStyle()));
+                mLocationComponent.setLocationComponentEnabled(true);
+                mLocationComponent.setCameraMode(CameraMode.TRACKING_GPS);
+                mLocationComponent.setRenderMode(RenderMode.COMPASS);
+            } else mLocationComponent.onStart();
 
-            locationEngine = LocationEngineProvider.getBestLocationEngine(getContext());
-            locationComponent.activateLocationComponent(getContext(),
-                    Objects.requireNonNull(mMapboxMap.getStyle()));
-            locationComponent.setLocationComponentEnabled(true);
-            locationComponent.setCameraMode(CameraMode.TRACKING_GPS);
-            locationComponent.setRenderMode(RenderMode.COMPASS);
+            mMapboxMap.setMinZoomPreference(14);
+            mMapboxMap.setMaxZoomPreference(25);
 
-            locationEngine.requestLocationUpdates(request, this, getMainLooper());
+            if (mLocationEngine == null)
+                mLocationEngine = LocationEngineProvider.getBestLocationEngine(getContext());
+
+            mLocationEngine.requestLocationUpdates(request, this, getMainLooper());
         } else {
             mPermissonManager = new PermissionsManager(new PermissionsListener() {
                 @Override
@@ -178,9 +182,8 @@ public class MapFragment extends BaseFragmentDagger
     //region LOCATION CALLBACKS
     @Override
     public void onSuccess(LocationEngineResult result) {
-        Toast.makeText(getContext(), "Point updated", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "Point", Toast.LENGTH_SHORT).show();
         Location lastLocation = result.getLastLocation();
-
     }
 
     @Override
@@ -188,4 +191,16 @@ public class MapFragment extends BaseFragmentDagger
 
     }
     //endregion LOCATION CALLBACKS
+
+    public void enableLocationCallback() {
+        setupLocationCallback();
+    }
+
+    public void disableLocationCallback() {
+        mMapboxMap.setMinZoomPreference(0);
+        mMapboxMap.setMaxZoomPreference(25);
+
+        mLocationComponent.onStop();
+        mLocationEngine.removeLocationUpdates(this);
+    }
 }
