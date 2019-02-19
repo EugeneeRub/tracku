@@ -9,13 +9,13 @@ public class FbUserRegistration {
     private String mRegisterPhone;
     private String mEmailSuffix;
     private String mUniqueCode;
-    private Map<String, Object> mapOfUsers;
+    private Map<String, FbConnectedUser> mapOfUsers;
 
     public FbUserRegistration() {
     }
 
     public FbUserRegistration(String mRegisterPhone, String mEmailSuffix, String mUniqueCode,
-                              Map<String, Object> mapOfUsers) {
+                              Map<String, FbConnectedUser> mapOfUsers) {
         this.mRegisterPhone = mRegisterPhone;
         this.mEmailSuffix = mEmailSuffix;
         this.mUniqueCode = mUniqueCode;
@@ -38,11 +38,11 @@ public class FbUserRegistration {
         this.mEmailSuffix = mEmailSuffix;
     }
 
-    public Map<String, Object> getMapOfUsers() {
+    public Map<String, FbConnectedUser> getMapOfUsers() {
         return mapOfUsers;
     }
 
-    public void setMapOfUsers(Map<String, Object> mapOfUsers) {
+    public void setMapOfUsers(Map<String, FbConnectedUser> mapOfUsers) {
         this.mapOfUsers = mapOfUsers;
     }
 

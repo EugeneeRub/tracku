@@ -1,5 +1,6 @@
 package com.erproject.busgo.views.main.fragmentLoadTrack;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,6 +13,8 @@ import android.widget.Button;
 
 import com.erproject.busgo.R;
 import com.erproject.busgo.base.BaseFragmentDagger;
+import com.erproject.busgo.data.data.request.fbRegistration.FbUserRegistration;
+import com.erproject.busgo.views.main.fragmentLoadTrack.adapter.LoadUsersAdapter;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 
 import javax.inject.Inject;
@@ -32,19 +35,19 @@ public class LoadTrackFragment extends BaseFragmentDagger implements LoadTrackCo
     @BindView(R.id.fragment_load_track_card_list)
     RecyclerView mUsersList;
 
-    private boolean isHidingAll;
+    private boolean mIsHidingAll;
 
     @Inject
     LoadTrackPresenter mPresenter;
 
     @OnClick(R.id.fragment_load_track_hide_all_layout)
     public void onArrowClicked() {
-        if (!isHidingAll) {
-            isHidingAll = true;
+        if (!mIsHidingAll) {
+            mIsHidingAll = true;
             mImageArrow.setIcon(R.drawable.ic_arrow_up_green);
             hideByAnimAllViews();
         } else {
-            isHidingAll = false;
+            mIsHidingAll = false;
             mImageArrow.setIcon(R.drawable.ic_arrow_down_green);
             showByAnimAllViews();
         }
@@ -91,7 +94,11 @@ public class LoadTrackFragment extends BaseFragmentDagger implements LoadTrackCo
         View view = inflater.inflate(R.layout.fragment_load_track, container, false);
         ButterKnife.bind(this, view);
 
+        prepareUsers();
         return view;
+    }
+
+    private void prepareUsers() {
     }
 
     @Override
@@ -122,6 +129,16 @@ public class LoadTrackFragment extends BaseFragmentDagger implements LoadTrackCo
 
     @Override
     public void goToLogin() {
-        startLoginActivity();
+        super.startLoginActivity();
+    }
+
+    @Override
+    public Context getmContext() {
+        return getContext();
+    }
+
+    @Override
+    public void updateState(FbUserRegistration mUser) {
+
     }
 }

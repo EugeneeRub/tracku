@@ -72,8 +72,8 @@ public class RegistrationActivityPresenter implements RegistrationActivityContra
         String[] emailSplitted = user.getmEmail().split("@");
         fbUser.setmEmailSuffix(emailSplitted[1]);
         fbUser.setmRegisterPhone(user.getmPhoneNumber());
-        Map<String, Object> map = new HashMap<>();
-        map.put("User 1", new FbConnectedUser());
+        Map<String, FbConnectedUser> map = new HashMap<>();
+        map.put(user.getmUsername(), new FbConnectedUser());
         fbUser.setMapOfUsers(map);
         fbUser.setmUniqueCode(user.getmUniqueCode());
 

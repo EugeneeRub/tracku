@@ -75,23 +75,25 @@ public class MainActivityPresenter implements MainActivityContract.Presenter {
     }
 
     private void loadUser(String userId) {
-        mDatabase.child("users").child(userId).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                mUser = dataSnapshot.getValue(FbUserRegistration.class);
-            }
+        mDatabase.child("users").child(userId)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        mUser = dataSnapshot.getValue(FbUserRegistration.class);
+                    }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                if (mView != null) {
-                    mView.showError(databaseError.getMessage());
-                }
-            }
-        });
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        if (mView != null) {
+                            mView.showError(databaseError.getMessage());
+                        }
+                    }
+                });
     }
 
     @Override
     public void dropView() {
         this.mView = null;
+        this.mDatabase.onDisconnect();
     }
 }

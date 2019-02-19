@@ -1,5 +1,8 @@
 package com.erproject.busgo.data.data.request.fbRegistration;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 
@@ -7,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @IgnoreExtraProperties
-public class FbConnectedUser {
+public class FbConnectedUser implements Parcelable {
     private Double mLatitude = 0d;
     private Double mLongitude = 0d;
     private String mLastTimeActive = "";// 01.01.2018 11:10
@@ -19,13 +22,70 @@ public class FbConnectedUser {
     }
 
     public FbConnectedUser(Double mLatitude, Double mLongitude, String mLastTimeActive,
-                           String mPhone) {
+                           String mPhone, Boolean mIsTracking, Boolean mIsUsed) {
         this.mLatitude = mLatitude;
         this.mLongitude = mLongitude;
         this.mLastTimeActive = mLastTimeActive;
         this.mPhone = mPhone;
-        this.mIsTracking = false;
+        this.mIsTracking = mIsTracking;
+        this.mIsUsed = mIsUsed;
     }
+
+    protected FbConnectedUser(Parcel in) {
+        if (in.readByte() == 0) {
+            mLatitude = null;
+        } else {
+            mLatitude = in.readDouble();
+        }
+        if (in.readByte() == 0) {
+            mLongitude = null;
+        } else {
+            mLongitude = in.readDouble();
+        }
+        mLastTimeActive = in.readString();
+        mPhone = in.readString();
+        byte tmpMIsTracking = in.readByte();
+        mIsTracking = tmpMIsTracking == 0 ? null : tmpMIsTracking == 1;
+        byte tmpMIsUsed = in.readByte();
+        mIsUsed = tmpMIsUsed == 0 ? null : tmpMIsUsed == 1;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        if (mLatitude == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeDouble(mLatitude);
+        }
+        if (mLongitude == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeDouble(mLongitude);
+        }
+        dest.writeString(mLastTimeActive);
+        dest.writeString(mPhone);
+        dest.writeByte((byte) (mIsTracking == null ? 0 : mIsTracking ? 1 : 2));
+        dest.writeByte((byte) (mIsUsed == null ? 0 : mIsUsed ? 1 : 2));
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<FbConnectedUser> CREATOR = new Creator<FbConnectedUser>() {
+        @Override
+        public FbConnectedUser createFromParcel(Parcel in) {
+            return new FbConnectedUser(in);
+        }
+
+        @Override
+        public FbConnectedUser[] newArray(int size) {
+            return new FbConnectedUser[size];
+        }
+    };
 
     @Exclude
     public Map<String, Object> getMappedObject() {
@@ -84,4 +144,5 @@ public class FbConnectedUser {
     public void setmIsUsed(Boolean mIsUsed) {
         this.mIsUsed = mIsUsed;
     }
+
 }

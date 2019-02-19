@@ -24,4 +24,6 @@
     <color name="colorWarmRed">#F54444</color>
     <color name="colorText">#575757</color>
 
+    <color name="colorItemUsed">#C4C4C4</color>
+
 </resources>

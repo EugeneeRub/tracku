@@ -190,6 +190,11 @@ public class MainActivity extends BaseActivityDagger
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
     public void showError(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
