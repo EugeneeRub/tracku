@@ -6,13 +6,14 @@
     android:layout_height="match_parent">
 
     <com.getbase.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fragment_start_track_choose_fab"
+        android:id="@+id/fragment_start_track_phone_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:visibility="gone"
         app:fab_colorNormal="@color/colorCustomWhite"
-        app:fab_icon="@drawable/ic_more_green"
+        app:fab_icon="@drawable/ic_phone_green"
         app:fab_size="mini"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -26,7 +27,7 @@
         android:layout_marginBottom="16dp"
         android:background="@drawable/background_button"
         android:padding="@dimen/_16dp"
-        android:text="@string/allow_transfer_data"
+        android:text="@string/string_allow_transfer_data"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -45,19 +46,19 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <android.support.v7.widget.CardView
-        android:id="@+id/fragment_start_track_card_choose"
+        android:id="@+id/fragment_start_track_card_layout_choose"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="@dimen/_8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="@dimen/_8dp"
+        android:layout_marginStart="@dimen/_16dp"
+        android:layout_marginTop="@dimen/_16dp"
+        android:layout_marginEnd="@dimen/_16dp"
+        android:layout_marginBottom="@dimen/_16dp"
         android:visibility="gone"
         app:cardCornerRadius="@dimen/_16dp"
         app:layout_constraintBottom_toTopOf="@+id/fragment_start_track_button_start"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_start_track_choose_fab">
+        app:layout_constraintTop_toBottomOf="@+id/fragment_start_track_phone_fab">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -67,7 +68,7 @@
                 android:id="@+id/fragment_load_track_card_edit_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="@dimen/_8dp"
                 android:layout_marginTop="@dimen/_8dp"
                 android:layout_marginEnd="@dimen/_8dp"
                 android:layout_marginBottom="@dimen/_8dp"
@@ -111,28 +112,28 @@
                     android:id="@+id/fragment_start_track_id1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     tools:text="user 1" />
 
                 <CheckBox
                     android:id="@+id/fragment_start_track_id2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     tools:text="user 2" />
 
                 <CheckBox
                     android:id="@+id/fragment_start_track_id3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     tools:text="user 3" />
 
                 <CheckBox
                     android:id="@+id/fragment_start_track_id4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     tools:text="user 4" />
 
             </LinearLayout>
@@ -141,5 +142,28 @@
 
     </android.support.v7.widget.CardView>
 
+    <android.support.v7.widget.CardView
+        android:id="@+id/fragment_start_track_card_layout_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_8dp"
+        android:layout_marginTop="@dimen/_8dp"
+        android:layout_marginEnd="@dimen/_8dp"
+        android:visibility="gone"
+        app:cardCornerRadius="@dimen/_12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/fragment_start_track_card_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/_12dp"
+            android:paddingTop="2dp"
+            android:paddingEnd="@dimen/_12dp"
+            android:paddingBottom="2dp" />
+
+    </android.support.v7.widget.CardView>
 
 </android.support.constraint.ConstraintLayout>

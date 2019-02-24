@@ -4,14 +4,18 @@
 
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
+    <uses-feature android:name="android.hardware.location.gps" />
+
     <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
         android:name=".app.App"
@@ -21,6 +25,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/ThemeLight">
+        <service
+            android:name=".views.serviceTracking.StartTrackService"
+            android:enabled="true"
+            android:exported="true"/>
+
         <activity
             android:name=".views.splashScreen.SplashScreenActivity"
             android:theme="@style/AuthTheme">
@@ -31,21 +40,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".views.main.MainActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".views.registration.RegistrationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AuthTheme" />
-
         <activity
             android:name=".views.login.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AuthTheme" />
-
         <activity
             android:name=".views.settings.SettingsActivity"
             android:screenOrientation="portrait" />

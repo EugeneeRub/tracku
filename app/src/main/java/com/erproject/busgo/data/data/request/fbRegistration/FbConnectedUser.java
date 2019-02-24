@@ -31,7 +31,7 @@ public class FbConnectedUser implements Parcelable {
         this.mIsUsed = mIsUsed;
     }
 
-    protected FbConnectedUser(Parcel in) {
+    FbConnectedUser(Parcel in) {
         if (in.readByte() == 0) {
             mLatitude = null;
         } else {
@@ -97,52 +97,51 @@ public class FbConnectedUser implements Parcelable {
         return map;
     }
 
-    public Double getmLatitude() {
+    public Double getLatitude() {
         return mLatitude;
     }
 
-    public void setmLatitude(Double mLatitude) {
+    public void setLatitude(Double mLatitude) {
         this.mLatitude = mLatitude;
     }
 
-    public Double getmLongitude() {
+    public Double getLongitude() {
         return mLongitude;
     }
 
-    public void setmLongitude(Double mLongitude) {
+    public void setLongitude(Double mLongitude) {
         this.mLongitude = mLongitude;
     }
 
-    public String getmLastTimeActive() {
-        return mLastTimeActive;
+    public String getLastTimeActive() {
+        return mLastTimeActive != null ? mLastTimeActive : "";
     }
 
-    public void setmLastTimeActive(String mLastTimeActive) {
+    public void setLastTimeActive(String mLastTimeActive) {
         this.mLastTimeActive = mLastTimeActive;
     }
 
-    public String getmPhone() {
-        return mPhone;
+    public String getPhone() {
+        return mPhone != null ? mPhone : "";
     }
 
-    public void setmPhone(String mPhone) {
+    public void setPhone(String mPhone) {
         this.mPhone = mPhone;
     }
 
-    public Boolean getmIsTracking() {
+    public Boolean getIsTracking() {
         return mIsTracking;
     }
 
-    public void setmIsTracking(Boolean mIsTracking) {
+    public void setIsTracking(Boolean mIsTracking) {
         this.mIsTracking = mIsTracking;
     }
 
-    public Boolean getmIsUsed() {
+    public Boolean getIsUsed() {
         return mIsUsed;
     }
 
-    public void setmIsUsed(Boolean mIsUsed) {
+    public void setIsUsed(Boolean mIsUsed) {
         this.mIsUsed = mIsUsed;
     }
-
 }

@@ -53,6 +53,9 @@ public class MainActivity extends BaseActivityDagger
     MapFragment mMapFragment;
     //endregion FRAGMENTS
 
+    private boolean mIsBusyLoad;
+    private boolean mIsBusyStart;
+
     @Inject
     EnterCodeDialog mEnterCodeDialog;
 
@@ -67,7 +70,7 @@ public class MainActivity extends BaseActivityDagger
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        setToolbarTitle(getString(R.string.map));
+        setToolbarTitle(getString(R.string.string_map));
         checkGPS();
         setUpNavigationView();
     }
@@ -113,7 +116,7 @@ public class MainActivity extends BaseActivityDagger
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_map:
-                setToolbarTitle(getString(R.string.map));
+                setToolbarTitle(getString(R.string.string_map));
                 if (getSupportFragmentManager().findFragmentByTag("MAP_FRAGMENT") != null) {
                     mMapFragment.enableLocationCallback();
                 }
@@ -125,7 +128,7 @@ public class MainActivity extends BaseActivityDagger
                     mMapFragment.enableLocationCallback();
                 }
 
-                setToolbarTitle(getString(R.string.start_track));
+                setToolbarTitle(getString(R.string.string_start_track));
                 showFragmentOrRestore2(R.id.container2, mStartTrackFragment,
                         "START_TRACK_FRAGMENT");
                 drawer.closeDrawers();
@@ -149,7 +152,7 @@ public class MainActivity extends BaseActivityDagger
 
     private void showCheckFragment() {
         if (presenter.isUserEnterTheUniqueCode()) {
-            setToolbarTitle(getString(R.string.monitor_users));
+            setToolbarTitle(getString(R.string.string_monitor_users));
             mMapFragment.disableLocationCallback();
             showFragmentOrRestore2(R.id.container2, mLoadTrackFragment, "LOAD_TRACK_FRAGMENT");
             drawer.closeDrawers();
@@ -207,5 +210,21 @@ public class MainActivity extends BaseActivityDagger
     @Override
     public Context getmContext() {
         return this;
+    }
+
+    public boolean isBusyLoad() {
+        return mIsBusyLoad;
+    }
+
+    public void setIsBusyLoad(boolean mIsBusyLoad) {
+        this.mIsBusyLoad = mIsBusyLoad;
+    }
+
+    public boolean isBusyStart() {
+        return mIsBusyStart;
+    }
+
+    public void setIsBusyStart(boolean mIsBusyStart) {
+        this.mIsBusyStart = mIsBusyStart;
     }
 }

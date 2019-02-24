@@ -74,7 +74,7 @@ public class SettingsActivity extends BaseActivityDagger {
 
     private void prepareToolbar() {
         setSupportActionBar(mToolbar);
-        setTitle(getString(R.string.settings));
+        setTitle(getString(R.string.string_settings));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_left_white);
     }

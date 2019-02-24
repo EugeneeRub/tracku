@@ -17,5 +17,7 @@ public interface StartTrackContract {
 
     interface Presenter extends BasePresenter<View> {
         void updateDatabase(String name);
+
+        String getBasePhone();
     }
 }

@@ -19,9 +19,22 @@ public class UserModel implements Parcelable {
         this.isMonitorUsed = isMonitorUsed;
     }
 
-    protected UserModel(Parcel in) {
+    UserModel(Parcel in) {
         name = in.readString();
+        user = in.readParcelable(FbConnectedUser.class.getClassLoader());
         isMonitorUsed = in.readByte() != 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeParcelable(user, flags);
+        dest.writeByte((byte) (isMonitorUsed ? 1 : 0));
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<UserModel> CREATOR = new Creator<UserModel>() {
@@ -49,7 +62,7 @@ public class UserModel implements Parcelable {
     }
 
     public String getName() {
-        return name;
+        return name != null ? name : "";
     }
 
     public FbConnectedUser getUser() {
@@ -60,14 +73,4 @@ public class UserModel implements Parcelable {
         return isMonitorUsed;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(name);
-        dest.writeByte((byte) (isMonitorUsed ? 1 : 0));
-    }
 }

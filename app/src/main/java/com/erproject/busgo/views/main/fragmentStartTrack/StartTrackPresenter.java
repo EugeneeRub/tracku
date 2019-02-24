@@ -94,7 +94,7 @@ public class StartTrackPresenter implements StartTrackContract.Presenter {
     @Override
     public void dropView() {
         this.mView = null;
-        clearBeforeStopping();
+        stopTracking();
         this.mDatabase.onDisconnect();
     }
 
@@ -111,15 +111,31 @@ public class StartTrackPresenter implements StartTrackContract.Presenter {
         mDatabase.child("users").child(mUserId).child("mapOfUsers").updateChildren(mMap);
     }
 
-    void clearBeforeStopping() {
+    @Override
+    public String getBasePhone() {
+        if (mUser == null) return "";
+        return mUser.getmRegisterPhone() != null ? mUser.getmRegisterPhone() : "";
+    }
+
+    void stopTracking() {
         if (mChoosedUser == null) return;
         FbConnectedUser user = mUser.getMapOfUsers().get(mChoosedUser);
-        if (user != null) user.setmIsUsed(false);
+        if (user != null) user.setIsUsed(false);
 
         HashMap<String, Object> mMap = new HashMap<>();
         mMap.put(mChoosedUser, user);
 
-        mDatabase.removeEventListener(mValueEventListener);
         mDatabase.child("users").child(mUserId).child("mapOfUsers").updateChildren(mMap);
+    }
+
+    String getUserId() {
+        return mUserId;
+    }
+
+    UserModel getModel() {
+        for (UserModel user : mList) {
+            if (user.getName().equals(mChoosedUser)) return user;
+        }
+        return null;
     }
 }

@@ -14,6 +14,10 @@ android {
                 (project.findProperty("API_KEY_PLACE_FINDER") ?: "")
         resValue "string", "ACCESS_TOKEN_MAP",
                 (project.findProperty("ACCESS_TOKEN_MAP") ?: "")
+        resValue "string", "START_PATH",
+                (project.findProperty("START_PATH") ?: "")
+        resValue "string", "MAP_USER_PATH",
+                (project.findProperty("MAP_USER_PATH") ?: "")
 
         multiDexEnabled true
     }
@@ -62,9 +66,9 @@ dependencies {
     // MapBox
     implementation 'com.mapbox.mapboxsdk:mapbox-android-sdk:7.0.0'
     // Services
-    implementation 'com.google.firebase:firebase-core:16.0.6'
+    implementation 'com.google.firebase:firebase-core:16.0.7'
     // FireBase Cloud
-    implementation 'com.google.firebase:firebase-firestore:18.0.0'
+    implementation 'com.google.firebase:firebase-firestore:18.0.1'
     // FireBase Database
     implementation 'com.google.firebase:firebase-database:16.0.6'
     // Location Services

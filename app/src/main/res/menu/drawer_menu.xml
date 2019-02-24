@@ -3,18 +3,18 @@
 
     <item
         android:id="@+id/menu_map"
-        android:title="@string/map" />
+        android:title="@string/string_map" />
     <item
         android:id="@+id/menu_start_track"
-        android:title="@string/start_track" />
+        android:title="@string/string_start_track" />
     <item
         android:id="@+id/menu_check_track"
-        android:title="@string/monitor_users" />
+        android:title="@string/string_monitor_users" />
 
     <group android:id="@+id/group2">
         <item
             android:id="@+id/menu_settings"
-            android:title="@string/settings" />
+            android:title="@string/string_settings" />
     </group>
 
     <group android:id="@+id/group3">

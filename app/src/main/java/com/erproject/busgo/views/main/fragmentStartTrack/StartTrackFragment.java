@@ -1,40 +1,57 @@
 package com.erproject.busgo.views.main.fragmentStartTrack;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
+import android.widget.TextView;
 
 import com.erproject.busgo.R;
 import com.erproject.busgo.base.BaseFragmentDagger;
 import com.erproject.busgo.data.data.simpleData.UserModel;
+import com.erproject.busgo.views.main.MainActivity;
+import com.erproject.busgo.views.serviceTracking.StartTrackService;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 
+import static com.erproject.busgo.views.serviceTracking.StartTrackService.MODEL_EXTRAS;
+import static com.erproject.busgo.views.serviceTracking.StartTrackService.USER_ID_EXTRAS;
+
 public class StartTrackFragment extends BaseFragmentDagger implements StartTrackContract.View {
+    private static final int PERMISSIONS_REQUEST_CALL_PHONE = 587;
+
     @BindView(R.id.fragment_start_track_hide_all_layout)
     FloatingActionButton mImageArrow;
-    @BindView(R.id.fragment_start_track_choose_fab)
-    FloatingActionButton mChooseFab;
+    @BindView(R.id.fragment_start_track_phone_fab)
+    FloatingActionButton mPhoneFab;
     @BindView(R.id.fragment_start_track_button_start)
     Button mButtonStartTrack;
-    @BindView(R.id.fragment_start_track_card_choose)
+    @BindView(R.id.fragment_start_track_card_layout_choose)
     CardView mCardChoose;
+    @BindView(R.id.fragment_start_track_card_layout_title)
+    CardView mCardTitle;
+    @BindView(R.id.fragment_start_track_card_title)
+    TextView mTextTitle;
 
     @BindView(R.id.fragment_start_track_id1)
     CheckBox mBtnUser1;
@@ -45,103 +62,117 @@ public class StartTrackFragment extends BaseFragmentDagger implements StartTrack
     @BindView(R.id.fragment_start_track_id4)
     CheckBox mBtnUser4;
 
-    private boolean isHidingAll;
+    private boolean mIsHidingAll;
+    private boolean mIsStartWork;
 
     @Inject
     StartTrackPresenter mPresenter;
 
-    @OnCheckedChanged({R.id.fragment_start_track_id1, R.id.fragment_start_track_id2,
-            R.id.fragment_start_track_id3, R.id.fragment_start_track_id4})
-    public void onCheckedChanged(CompoundButton button, boolean isChecked) {
-        switch (button.getId()) {
-            case R.id.fragment_start_track_id1:
-                if (isChecked) {
-                    mBtnUser2.setEnabled(false);
-                    mBtnUser3.setEnabled(false);
-                    mBtnUser4.setEnabled(false);
-                } else {
-                    mBtnUser2.setEnabled(true);
-                    mBtnUser3.setEnabled(true);
-                    mBtnUser4.setEnabled(true);
-                }
-                break;
-            case R.id.fragment_start_track_id2:
-                if (isChecked) {
-                    mBtnUser1.setEnabled(false);
-                    mBtnUser3.setEnabled(false);
-                    mBtnUser4.setEnabled(false);
-                } else {
-                    mBtnUser1.setEnabled(true);
-                    mBtnUser3.setEnabled(true);
-                    mBtnUser4.setEnabled(true);
-                }
-                break;
-            case R.id.fragment_start_track_id3:
-                if (isChecked) {
-                    mBtnUser1.setEnabled(false);
-                    mBtnUser2.setEnabled(false);
-                    mBtnUser4.setEnabled(false);
-                } else {
-                    mBtnUser1.setEnabled(true);
-                    mBtnUser2.setEnabled(true);
-                    mBtnUser4.setEnabled(true);
-                }
-                break;
-            case R.id.fragment_start_track_id4:
-                if (isChecked) {
-                    mBtnUser1.setEnabled(false);
-                    mBtnUser2.setEnabled(false);
-                    mBtnUser3.setEnabled(false);
-                } else {
-                    mBtnUser1.setEnabled(true);
-                    mBtnUser2.setEnabled(true);
-                    mBtnUser3.setEnabled(true);
-                }
-                break;
-        }
-    }
+//    @OnCheckedChanged({R.id.fragment_start_track_id1, R.id.fragment_start_track_id2,
+//            R.id.fragment_start_track_id3, R.id.fragment_start_track_id4})
+//    @SuppressWarnings("unused")
+//    public void onCheckedChanged(CompoundButton button, boolean isChecked) {
+//        switch (button.getId()) {
+//            case R.id.fragment_start_track_id1:
+//                break;
+//            case R.id.fragment_start_track_id2:
+//                break;
+//            case R.id.fragment_start_track_id3:
+//                break;
+//            case R.id.fragment_start_track_id4:
+//                break;
+//        }
+//    }
 
     @OnClick(R.id.fragment_start_track_hide_all_layout)
     public void onArrowClicked() {
-        if (!isHidingAll) {
-            isHidingAll = true;
+        if (!mIsHidingAll) {
+            mIsHidingAll = true;
             mImageArrow.setIcon(R.drawable.ic_arrow_up_green);
             hideByAnimAllViews();
         } else {
-            isHidingAll = false;
+            mIsHidingAll = false;
             mImageArrow.setIcon(R.drawable.ic_arrow_down_green);
             showByAnimAllViews();
         }
     }
 
-    @OnClick(R.id.fragment_start_track_choose_fab)
+    @OnClick(R.id.fragment_start_track_phone_fab)
     public void onChooseClicked() {
-        if (mCardChoose.getVisibility() == View.GONE) {
-            mCardChoose.setVisibility(View.VISIBLE);
+        if (getActivity() == null) return;
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CALL_PHONE) !=
+                PackageManager.PERMISSION_GRANTED) {
+            // Permission is not granted
+            ActivityCompat
+                    .requestPermissions(getActivity(), new String[]{Manifest.permission.CALL_PHONE},
+                            PERMISSIONS_REQUEST_CALL_PHONE);
+        } else {
+            // Permission has already been granted
+            startCallingToBasePhone();
+        }
+    }
 
-            mButtonStartTrack.setEnabled(false);
-            mChooseFab.setEnabled(false);
-            mImageArrow.setEnabled(false);
+    private void startCallingToBasePhone() {
+        Intent callIntent = new Intent(Intent.ACTION_CALL);
+        callIntent.setData(Uri.parse("tel:" + mPresenter.getBasePhone()));
+        startActivity(callIntent);
+    }
+
+    @OnClick(R.id.fragment_start_track_button_start)
+    public void onStartClicked() {
+        boolean isBusyLoad = ((MainActivity) Objects.requireNonNull(getActivity())).isBusyLoad();
+        if (isBusyLoad) {
+            showDialogWithText(getString(R.string.string_warning_text),
+                    getString(R.string.string_disable_loading_warning));
+        } else {
+            if (!mIsStartWork) {
+                showCard();
+            } else {
+                stopTracking();
+            }
+            mIsStartWork = !mIsStartWork;
         }
     }
 
     @OnClick(R.id.fragment_start_track_card_text)
-    public void onTextCloseClicked() {
+    public void onCloseClicked() {
+        ((MainActivity) Objects.requireNonNull(getActivity())).setIsBusyStart(false);
+        mIsStartWork = !mIsStartWork;
+        hideCard();
+    }
+
+    private void hideCard() {
         mCardChoose.setVisibility(View.GONE);
         mButtonStartTrack.setEnabled(true);
-        mChooseFab.setEnabled(true);
         mImageArrow.setEnabled(true);
+    }
+
+    private void showCard() {
+        ((MainActivity) Objects.requireNonNull(getActivity())).setIsBusyStart(true);
+        mCardChoose.setVisibility(View.VISIBLE);
+        mButtonStartTrack.setEnabled(false);
+        mImageArrow.setEnabled(false);
     }
 
     private void hideByAnimAllViews() {
         mButtonStartTrack.animate().alpha(0.0f).translationY(mButtonStartTrack.getHeight());
-        mChooseFab.animate().alpha(0.0f).translationX(mChooseFab.getWidth());
+        if (mPhoneFab.getVisibility() == View.VISIBLE) {
+            mPhoneFab.animate().alpha(0.0f).translationX(mPhoneFab.getWidth());
+        }
+        if (mCardTitle.getVisibility() == View.VISIBLE) {
+            mCardTitle.animate().alpha(0.0f).translationY(-mCardTitle.getHeight());
+        }
     }
 
     private void showByAnimAllViews() {
         mButtonStartTrack.animate().alpha(1.0f).translationY(0);
         mButtonStartTrack.setVisibility(View.VISIBLE);
-        mChooseFab.animate().alpha(1.0f).translationX(0);
+        if (mPhoneFab.getVisibility() == View.VISIBLE) {
+            mPhoneFab.animate().alpha(1.0f).translationX(0);
+        }
+        if (mCardTitle.getVisibility() == View.VISIBLE) {
+            mCardTitle.animate().alpha(1.0f).translationY(0);
+        }
     }
 
     @Inject
@@ -173,18 +204,8 @@ public class StartTrackFragment extends BaseFragmentDagger implements StartTrack
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mPresenter.clearBeforeStopping();
+        mPresenter.stopTracking();
         mPresenter.dropView();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        mCardChoose.setVisibility(View.GONE);
-
-        mButtonStartTrack.setEnabled(true);
-        mChooseFab.setEnabled(true);
-        mImageArrow.setEnabled(true);
     }
 
     @Override
@@ -229,20 +250,21 @@ public class StartTrackFragment extends BaseFragmentDagger implements StartTrack
 
     private void showRadioButton(final CheckBox button, final UserModel model) {
         button.setVisibility(View.VISIBLE);
-        if (!model.getUser().getmIsUsed()) {
+        if (!model.getUser().getIsUsed()) {
             button.setEnabled(true);
             button.setText(model.getName());
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (!model.getUser().getmIsUsed()) {
-                        model.getUser().setmIsUsed(true);
+                    if (!model.getUser().getIsUsed()) {
+                        model.getUser().setIsUsed(true);
                         button.setText(String.format("%s (in use)", model.getName()));
                     } else {
-                        model.getUser().setmIsUsed(false);
+                        model.getUser().setIsUsed(false);
                         button.setText(model.getName());
                     }
-                    mPresenter.updateDatabase(model.getName());
+                    button.setChecked(false);
+                    startTracking(model.getName());
                 }
             });
         } else {
@@ -259,9 +281,48 @@ public class StartTrackFragment extends BaseFragmentDagger implements StartTrack
         mBtnUser4.setVisibility(View.GONE);
     }
 
+    private void stopTracking() {
+        ((MainActivity) Objects.requireNonNull(getActivity())).setIsBusyStart(false);
+        mCardTitle.setVisibility(View.GONE);
+        mPhoneFab.setVisibility(View.GONE);
+
+        mButtonStartTrack.setText(R.string.string_allow_transfer_data);
+        mTextTitle.setText("");
+
+        Intent stopServiceIntent = new Intent(getActivity(), StartTrackService.class);
+        if (getActivity() != null) getActivity().stopService(stopServiceIntent);
+
+        mPresenter.stopTracking();
+    }
+
+    private void startTracking(String title) {
+        mCardTitle.setVisibility(View.VISIBLE);
+        mPhoneFab.setVisibility(View.VISIBLE);
+
+        mButtonStartTrack.setText(R.string.string_stop_transfer_data);
+        mTextTitle.setText(String.format(" User: \"%s\" ", title));
+        hideCard();
+
+        mPresenter.updateDatabase(title);
+
+        // load service
+        Intent startServiceIntent = new Intent(getActivity(), StartTrackService.class);
+        startServiceIntent.putExtra(MODEL_EXTRAS, mPresenter.getModel());
+        startServiceIntent.putExtra(USER_ID_EXTRAS, mPresenter.getUserId());
+        if (getActivity() != null) getActivity().startService(startServiceIntent);
+    }
+
     @Override
-    public void onDestroyView() {
-        mPresenter.clearBeforeStopping();
-        super.onDestroyView();
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[],
+                                           @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSIONS_REQUEST_CALL_PHONE: {
+                if (grantResults.length > 0 &&
+                        grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    startCallingToBasePhone();
+                }
+            }
+            break;
+        }
     }
 }
