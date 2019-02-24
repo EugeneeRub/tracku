@@ -15,8 +15,11 @@ import android.widget.Toast;
 import com.erproject.busgo.R;
 import com.erproject.busgo.data.data.request.fbRegistration.FbConnectedUser;
 import com.erproject.busgo.data.data.simpleData.UserModel;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.mapbox.android.core.location.LocationEngine;
 import com.mapbox.android.core.location.LocationEngineCallback;
 import com.mapbox.android.core.location.LocationEngineProvider;
@@ -27,6 +30,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
+
+import static com.erproject.busgo.base.StaticFields.MAX_TIME_UPDATE;
+import static com.erproject.busgo.base.StaticFields.MIDDLE_TIME_UPDATE;
 
 public class StartTrackService extends Service
         implements LocationEngineCallback<LocationEngineResult> {
@@ -43,12 +49,22 @@ public class StartTrackService extends Service
     private DatabaseReference mDatabase;
 
     private LocationEngine mLocationEngine;
-    private LocationEngineRequest request = new LocationEngineRequest.Builder(5_000)
-            .setPriority(LocationEngineRequest.PRIORITY_HIGH_ACCURACY).setMaxWaitTime(30_000)
-            .build();
+    private LocationEngineRequest request = new LocationEngineRequest.Builder(MIDDLE_TIME_UPDATE)
+            .setPriority(LocationEngineRequest.PRIORITY_HIGH_ACCURACY)
+            .setMaxWaitTime(MAX_TIME_UPDATE).build();
 
     public StartTrackService() {
         this.mDatabase = FirebaseDatabase.getInstance().getReference();
+    }
+
+    private void copyFromNewObjectIfNeed(UserModel userModel) {
+        if (userModel == null || userModel.getUser() == null) return;
+        if (userModel.getUser().getIsTracking() != mTrackingUser.getUser().getIsTracking()) {
+            mTrackingUser.getUser().setIsTracking(userModel.getUser().getIsTracking());
+        }
+        if (!userModel.getUser().getPhone().equals(mTrackingUser.getUser().getPhone())) {
+            mTrackingUser.getUser().setPhone(userModel.getUser().getPhone());
+        }
     }
 
     @Override
@@ -73,6 +89,23 @@ public class StartTrackService extends Service
     public int onStartCommand(Intent intent, int flags, int startId) {
         mTrackingUser = intent.getParcelableExtra(MODEL_EXTRAS);
         mUserId = intent.getStringExtra(USER_ID_EXTRAS);
+
+        this.mDatabase.child(getString(R.string.START_PATH)).child(mUserId)
+                .child(getString(R.string.MAP_USER_PATH)).child(mTrackingUser.getName())
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        UserModel userModel = new UserModel();
+                        userModel.setName(dataSnapshot.getKey());
+                        userModel.setUser(dataSnapshot.getValue(FbConnectedUser.class));
+                        copyFromNewObjectIfNeed(userModel);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
 
         startForeground();
 

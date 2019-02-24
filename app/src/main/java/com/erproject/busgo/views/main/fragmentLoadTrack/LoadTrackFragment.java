@@ -71,11 +71,23 @@ public class LoadTrackFragment extends BaseFragmentDagger implements LoadTrackCo
 
     private void onAllowClicked() {
         if (!mIsEnableLoading) {
+            mButtonLoadTrack.setText(R.string.string_stop_observation);
             ((MainActivity) Objects.requireNonNull(getActivity())).setIsBusyLoad(true);
+            mIsEnableLoading = true;
+
+            if (getActivity() != null)
+                ((MainActivity) getActivity()).loadUsersOnMap(mPresenter.getListActiveUsers());
         } else {
+            mIsEnableLoading = false;
+
+            mButtonLoadTrack.setText(R.string.string_allow_observation);
             ((MainActivity) Objects.requireNonNull(getActivity())).setIsBusyLoad(false);
+
+            if (getActivity() != null) ((MainActivity) getActivity()).stopShowingUsers();
+
+            clearCheckboxesStateButtons();
+            mPresenter.stopLoading();
         }
-        mIsEnableLoading = !mIsEnableLoading;
     }
 
     @OnClick(R.id.fragment_load_track_hide_all_layout)
@@ -145,7 +157,7 @@ public class LoadTrackFragment extends BaseFragmentDagger implements LoadTrackCo
         ButterKnife.bind(this, view);
 
         hideRadioButtons();
-        showButtons(mPresenter.getList());
+        showButtons(mPresenter.getListUsers());
 
         return view;
     }
@@ -219,16 +231,11 @@ public class LoadTrackFragment extends BaseFragmentDagger implements LoadTrackCo
             button.setText(String.format("%s (Active)", model.getName()));
         else button.setText(model.getName());
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!model.getUser().getIsTracking()) {
-                    model.getUser().setIsTracking(true);
-                } else {
-                    model.getUser().setIsTracking(false);
-                }
-                mPresenter.updateDatabase();
-            }
+        button.setTag(model);
+
+        button.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            model.getUser().setIsTracking(isChecked);
+            mPresenter.updateDatabase();
         });
     }
 
@@ -239,8 +246,16 @@ public class LoadTrackFragment extends BaseFragmentDagger implements LoadTrackCo
         mBtnUser4.setVisibility(View.GONE);
     }
 
+    private void clearCheckboxesStateButtons() {
+        mBtnUser1.setChecked(false);
+        mBtnUser2.setChecked(false);
+        mBtnUser3.setChecked(false);
+        mBtnUser4.setChecked(false);
+    }
+
     @Override
     public void showUsersOnMap(List<UserModel> list) {
-
+        if (mIsEnableLoading)
+            if (getActivity() != null) ((MainActivity) getActivity()).loadUsersOnMap(list);
     }
 }

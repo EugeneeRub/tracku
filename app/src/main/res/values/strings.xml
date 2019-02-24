@@ -27,6 +27,7 @@
     <string name="string_map">Map</string>
     <string name="string_general">General</string>
     <string name="string_allow_observation">Allow observation</string>
+    <string name="string_stop_observation">Stop observation</string>
     <string name="string_allow_transfer_data">Allow transfer data</string>
     <string name="string_stop_transfer_data">Stop transfer data</string>
     <string name="string_unique_code">Unique code</string>

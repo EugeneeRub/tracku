@@ -1,6 +1,7 @@
 package com.erproject.busgo.data.sharedPreferences;
 
-import org.jetbrains.annotations.NotNull;
+
+import android.support.annotation.NonNull;
 
 public enum LocalSharedPreferences {
     CITY("CITY");
@@ -11,7 +12,7 @@ public enum LocalSharedPreferences {
         this.mType = mType;
     }
 
-    @NotNull
+    @NonNull
     public String toString() {
         return mType;
     }

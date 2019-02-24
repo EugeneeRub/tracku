@@ -28,7 +28,8 @@ public class LoadTrackPresenter implements LoadTrackContract.Presenter {
     private DatabaseReference mDatabase;
     private FbUserRegistration mUser;
     private String mUserId;
-    private List<UserModel> mList;
+    private List<UserModel> mListUsers;
+    private List<UserModel> mListActiveUsers;
     private ValueEventListener valueEventListener = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -45,7 +46,8 @@ public class LoadTrackPresenter implements LoadTrackContract.Presenter {
     @Inject
     LoadTrackPresenter() {
         this.mDatabase = FirebaseDatabase.getInstance().getReference();
-        this.mList = new ArrayList<>();
+        this.mListUsers = new ArrayList<>();
+        this.mListActiveUsers = new ArrayList<>();
     }
 
     @Override
@@ -68,7 +70,9 @@ public class LoadTrackPresenter implements LoadTrackContract.Presenter {
     @SuppressWarnings("all")
     private synchronized void update(Map<String, FbConnectedUser> mUsers) {
         if (mUsers == null) return;
-        mList.clear();
+        mListUsers.clear();
+        mListActiveUsers.clear();
+
         HashMap<String, FbConnectedUser> map = new HashMap<>(mUsers);
         Iterator it = map.entrySet().iterator();
         while (it.hasNext()) {
@@ -77,19 +81,25 @@ public class LoadTrackPresenter implements LoadTrackContract.Presenter {
             userModel.setName((String) pair.getKey());
             userModel.setUser((FbConnectedUser) pair.getValue());
 
-            mList.add(userModel);
+            mListUsers.add(userModel);
+            if (userModel.getUser().getIsUsed() && userModel.getUser().getIsTracking())
+                mListActiveUsers.add(userModel);
 
             it.remove();// avoids a ConcurrentModificationException
         }
 
         if (mView != null && this.mUser != null) {
-            mView.showUsersOnMap(mList);
-            mView.updateState(mList);
+            mView.showUsersOnMap(mListActiveUsers);
+            mView.updateState(mListUsers);
         }
     }
 
-    List<UserModel> getList() {
-        return mList;
+    List<UserModel> getListUsers() {
+        return mListUsers;
+    }
+
+    List<UserModel> getListActiveUsers() {
+        return mListActiveUsers;
     }
 
     @Override
@@ -101,7 +111,7 @@ public class LoadTrackPresenter implements LoadTrackContract.Presenter {
     @Override
     public void updateDatabase() {
         HashMap<String, Object> mMap = new HashMap<>();
-        for (UserModel user : mList) {
+        for (UserModel user : mListUsers) {
             mMap.put(user.getName(), user.getUser());
         }
         mDatabase.child("users").child(mUserId).child("mapOfUsers").updateChildren(mMap);
@@ -110,5 +120,13 @@ public class LoadTrackPresenter implements LoadTrackContract.Presenter {
     @Override
     public void stopCallBack() {
         mDatabase.removeEventListener(valueEventListener);
+    }
+
+    @Override
+    public void stopLoading() {
+        for (UserModel user : mListUsers) {
+            user.getUser().setIsTracking(false);
+        }
+        updateDatabase();
     }
 }

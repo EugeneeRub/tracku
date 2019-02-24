@@ -31,6 +31,11 @@ android {
     packagingOptions {
         exclude 'META-INF/rxjava.properties'
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -64,7 +69,8 @@ dependencies {
     // Piccasso
     implementation 'com.squareup.picasso:picasso:2.71828'
     // MapBox
-    implementation 'com.mapbox.mapboxsdk:mapbox-android-sdk:7.0.0'
+    implementation 'com.mapbox.mapboxsdk:mapbox-android-sdk:7.1.1'
+    implementation 'com.mapbox.mapboxsdk:mapbox-android-plugin-annotation-v7:0.5.0'
     // Services
     implementation 'com.google.firebase:firebase-core:16.0.7'
     // FireBase Cloud

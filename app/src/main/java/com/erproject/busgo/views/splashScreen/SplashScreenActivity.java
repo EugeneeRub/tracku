@@ -97,7 +97,7 @@ public class SplashScreenActivity extends AppCompatActivity {
     private void animateLogo() {
         logoAnimatorSet = new AnimatorSet();
         logoAnimatorSet.play(ObjectAnimator.ofFloat(mainLayout, "alpha", 0, 0.7f));
-        logoAnimatorSet.setDuration(3000);
+        logoAnimatorSet.setDuration(1500);
         logoAnimatorSet.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
@@ -115,13 +115,13 @@ public class SplashScreenActivity extends AppCompatActivity {
     }
 
     public void goToMain() {
-        if (logoAnimatorSet != null && logoAnimatorSet.isRunning()) logoAnimatorSet.cancel();
+        if (logoAnimatorSet != null) logoAnimatorSet.end();
         startActivity(MainActivity.newInstance(this));
         finish();
     }
 
     public void goToLogin() {
-        if (logoAnimatorSet != null && logoAnimatorSet.isRunning()) logoAnimatorSet.cancel();
+        if (logoAnimatorSet != null) logoAnimatorSet.end();
         startActivity(LoginActivity.newInstance(this));
         finish();
     }

@@ -21,5 +21,7 @@ public interface LoadTrackContract {
         void updateDatabase();
 
         void stopCallBack();
+
+        void stopLoading();
     }
 }

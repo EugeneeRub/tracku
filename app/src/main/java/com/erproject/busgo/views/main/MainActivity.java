@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.erproject.busgo.R;
 import com.erproject.busgo.base.BaseActivityDagger;
+import com.erproject.busgo.data.data.simpleData.UserModel;
 import com.erproject.busgo.dialogs.EnterCodeDialog;
 import com.erproject.busgo.services.authManager.AuthController;
 import com.erproject.busgo.utils.GPSChecker;
@@ -25,6 +26,8 @@ import com.erproject.busgo.views.main.fragmentLoadTrack.LoadTrackFragment;
 import com.erproject.busgo.views.main.fragmentMap.MapFragment;
 import com.erproject.busgo.views.main.fragmentStartTrack.StartTrackFragment;
 import com.erproject.busgo.views.settings.SettingsActivity;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -226,5 +229,13 @@ public class MainActivity extends BaseActivityDagger
 
     public void setIsBusyStart(boolean mIsBusyStart) {
         this.mIsBusyStart = mIsBusyStart;
+    }
+
+    public void loadUsersOnMap(List<UserModel> activeUsers) {
+        mMapFragment.loadUsersOnMap(activeUsers);
+    }
+
+    public void stopShowingUsers() {
+        mMapFragment.stopShowingUsers();
     }
 }
