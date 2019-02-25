@@ -2,6 +2,7 @@ package com.erproject.busgo.views.main.fragmentLoadTrack;
 
 import android.support.annotation.NonNull;
 
+import com.erproject.busgo.BuildConfig;
 import com.erproject.busgo.data.data.request.fbRegistration.FbConnectedUser;
 import com.erproject.busgo.data.data.request.fbRegistration.FbUserRegistration;
 import com.erproject.busgo.data.data.simpleData.UserModel;
@@ -64,7 +65,8 @@ public class LoadTrackPresenter implements LoadTrackContract.Presenter {
     }
 
     private void loadAndTrackUser(String userId) {
-        mDatabase.child("users").child(userId).addValueEventListener(valueEventListener);
+        mDatabase.child(BuildConfig.START_PATH).child(userId)
+                .addValueEventListener(valueEventListener);
     }
 
     @SuppressWarnings("all")
@@ -114,7 +116,8 @@ public class LoadTrackPresenter implements LoadTrackContract.Presenter {
         for (UserModel user : mListUsers) {
             mMap.put(user.getName(), user.getUser());
         }
-        mDatabase.child("users").child(mUserId).child("mapOfUsers").updateChildren(mMap);
+        mDatabase.child(BuildConfig.START_PATH).child(mUserId).child(BuildConfig.MAP_USER_PATH)
+                .updateChildren(mMap);
     }
 
     @Override

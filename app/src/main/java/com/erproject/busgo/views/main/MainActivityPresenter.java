@@ -3,6 +3,7 @@ package com.erproject.busgo.views.main;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.erproject.busgo.BuildConfig;
 import com.erproject.busgo.data.Repository;
 import com.erproject.busgo.data.data.request.fbRegistration.FbUserRegistration;
 import com.erproject.busgo.data.exceptions.UserNotFoundException;
@@ -75,7 +76,7 @@ public class MainActivityPresenter implements MainActivityContract.Presenter {
     }
 
     private void loadUser(String userId) {
-        mDatabase.child("users").child(userId)
+        mDatabase.child(BuildConfig.START_PATH).child(userId)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

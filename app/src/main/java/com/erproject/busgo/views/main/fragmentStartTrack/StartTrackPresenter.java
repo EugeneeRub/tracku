@@ -2,6 +2,7 @@ package com.erproject.busgo.views.main.fragmentStartTrack;
 
 import android.support.annotation.NonNull;
 
+import com.erproject.busgo.BuildConfig;
 import com.erproject.busgo.data.data.request.fbRegistration.FbConnectedUser;
 import com.erproject.busgo.data.data.request.fbRegistration.FbUserRegistration;
 import com.erproject.busgo.data.data.simpleData.UserModel;
@@ -108,7 +109,8 @@ public class StartTrackPresenter implements StartTrackContract.Presenter {
         HashMap<String, Object> mMap = new HashMap<>();
         mMap.put(name, mUser.getMapOfUsers().get(name));
         mIsUpdated = false;
-        mDatabase.child("users").child(mUserId).child("mapOfUsers").updateChildren(mMap);
+        mDatabase.child(BuildConfig.START_PATH).child(mUserId).child(BuildConfig.MAP_USER_PATH)
+                .updateChildren(mMap);
     }
 
     @Override
@@ -125,7 +127,8 @@ public class StartTrackPresenter implements StartTrackContract.Presenter {
         HashMap<String, Object> mMap = new HashMap<>();
         mMap.put(mChoosedUser, user);
 
-        mDatabase.child("users").child(mUserId).child("mapOfUsers").updateChildren(mMap);
+        mDatabase.child(BuildConfig.START_PATH).child(mUserId).child(BuildConfig.MAP_USER_PATH)
+                .updateChildren(mMap);
     }
 
     String getUserId() {

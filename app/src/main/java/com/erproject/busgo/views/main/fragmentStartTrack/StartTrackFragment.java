@@ -252,25 +252,22 @@ public class StartTrackFragment extends BaseFragmentDagger implements StartTrack
         button.setVisibility(View.VISIBLE);
         if (!model.getUser().getIsUsed()) {
             button.setEnabled(true);
-            button.setText(model.getName());
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (!model.getUser().getIsUsed()) {
-                        model.getUser().setIsUsed(true);
-                        button.setText(String.format("%s (in use)", model.getName()));
-                    } else {
-                        model.getUser().setIsUsed(false);
-                        button.setText(model.getName());
-                    }
-                    button.setChecked(false);
-                    startTracking(model.getName());
+            button.setText(model.getUser().getUserName());
+            button.setOnClickListener(v -> {
+                if (!model.getUser().getIsUsed()) {
+                    model.getUser().setIsUsed(true);
+                    button.setText(String.format("%s (in use)", model.getUser().getUserName()));
+                } else {
+                    model.getUser().setIsUsed(false);
+                    button.setText(model.getUser().getUserName());
                 }
+                button.setChecked(false);
+                startTracking(model.getName(), model.getUser().getUserName());
             });
         } else {
             button.setEnabled(false);
             button.setOnClickListener(null);
-            button.setText(String.format("%s (in use)", model.getName()));
+            button.setText(String.format("%s (in use)", model.getUser().getUserName()));
         }
     }
 
@@ -295,15 +292,15 @@ public class StartTrackFragment extends BaseFragmentDagger implements StartTrack
         mPresenter.stopTracking();
     }
 
-    private void startTracking(String title) {
+    private void startTracking(String userID, String userName) {
         mCardTitle.setVisibility(View.VISIBLE);
         mPhoneFab.setVisibility(View.VISIBLE);
 
         mButtonStartTrack.setText(R.string.string_stop_transfer_data);
-        mTextTitle.setText(String.format(" User: \"%s\" ", title));
+        mTextTitle.setText(String.format(" User: \"%s\" ", userName));
         hideCard();
 
-        mPresenter.updateDatabase(title);
+        mPresenter.updateDatabase(userID);
 
         // load service
         Intent startServiceIntent = new Intent(getActivity(), StartTrackService.class);

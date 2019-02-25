@@ -11,6 +11,7 @@ import java.util.Map;
 
 @IgnoreExtraProperties
 public class FbConnectedUser implements Parcelable {
+    private String mUserName = "";
     private Double mLatitude = 0d;
     private Double mLongitude = 0d;
     private String mLastTimeActive = "";// 01.01.2018 11:10
@@ -21,9 +22,11 @@ public class FbConnectedUser implements Parcelable {
     public FbConnectedUser() {
     }
 
-    public FbConnectedUser(Double mLatitude, Double mLongitude, String mLastTimeActive,
-                           String mPhone, Boolean mIsTracking, Boolean mIsUsed) {
+    public FbConnectedUser(String mUserName, Double mLatitude, Double mLongitude,
+                           String mLastTimeActive, String mPhone, Boolean mIsTracking,
+                           Boolean mIsUsed) {
         this.mLatitude = mLatitude;
+        this.mUserName = mUserName;
         this.mLongitude = mLongitude;
         this.mLastTimeActive = mLastTimeActive;
         this.mPhone = mPhone;
@@ -32,6 +35,7 @@ public class FbConnectedUser implements Parcelable {
     }
 
     FbConnectedUser(Parcel in) {
+        mUserName = in.readString();
         if (in.readByte() == 0) {
             mLatitude = null;
         } else {
@@ -52,6 +56,7 @@ public class FbConnectedUser implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(mUserName);
         if (mLatitude == null) {
             dest.writeByte((byte) 0);
         } else {
@@ -143,5 +148,13 @@ public class FbConnectedUser implements Parcelable {
 
     public void setIsUsed(Boolean mIsUsed) {
         this.mIsUsed = mIsUsed;
+    }
+
+    public String getUserName() {
+        return mUserName;
+    }
+
+    public void setUserName(String mUserName) {
+        this.mUserName = mUserName;
     }
 }

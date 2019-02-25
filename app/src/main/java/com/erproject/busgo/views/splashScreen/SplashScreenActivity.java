@@ -48,7 +48,6 @@ public class SplashScreenActivity extends AppCompatActivity {
     TextView tvAuthorText;
     @BindView(R.id.text_layout)
     LinearLayout mainLayout;
-    private AnimatorSet logoAnimatorSet;
     private List<InterestingPhrase> list;
 
     @Override
@@ -84,24 +83,25 @@ public class SplashScreenActivity extends AppCompatActivity {
                 ivBackImage.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.bus7));
                 break;
         }
+
+
     }
 
     private void loadText() {
         if (list == null || list.isEmpty()) return;
-        int random = new Random().nextInt(20);
+        int random = new Random().nextInt(list.size());
         InterestingPhrase interestingPhrase = list.get(random);
         tvMainText.setText(interestingPhrase.getTitle());
         tvAuthorText.setText(interestingPhrase.getAuthor());
     }
 
     private void animateLogo() {
-        logoAnimatorSet = new AnimatorSet();
+        AnimatorSet logoAnimatorSet = new AnimatorSet();
         logoAnimatorSet.play(ObjectAnimator.ofFloat(mainLayout, "alpha", 0, 0.7f));
-        logoAnimatorSet.setDuration(1500);
+        logoAnimatorSet.setDuration(3000);
         logoAnimatorSet.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                super.onAnimationEnd(animation);
                 try {
                     if (AuthController.getToken(getApplicationContext()) != null) goToMain();
                     else goToLogin();
@@ -111,19 +111,18 @@ public class SplashScreenActivity extends AppCompatActivity {
             }
         });
         logoAnimatorSet.start();
-        overridePendingTransition(R.anim.fade_in, 0);
     }
 
     public void goToMain() {
-        if (logoAnimatorSet != null) logoAnimatorSet.end();
         startActivity(MainActivity.newInstance(this));
         finish();
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 
     public void goToLogin() {
-        if (logoAnimatorSet != null) logoAnimatorSet.end();
         startActivity(LoginActivity.newInstance(this));
         finish();
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 
     @Override
@@ -142,7 +141,6 @@ public class SplashScreenActivity extends AppCompatActivity {
             while ((n = reader.read(buffer)) != -1) {
                 writer.write(buffer, 0, n);
             }
-
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (IOException e) {

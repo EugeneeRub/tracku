@@ -6,8 +6,6 @@ import com.erproject.busgo.data.data.request.fbRegistration.FbConnectedUser;
 import com.erproject.busgo.data.data.request.fbRegistration.FbUserRegistration;
 import com.erproject.busgo.data.data.responses.BaseResponse;
 import com.erproject.busgo.utils.ErrorConverter;
-import com.google.android.gms.tasks.OnCanceledListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -68,27 +66,24 @@ public class RegistrationActivityPresenter implements RegistrationActivityContra
 
     private void registerUserInFirebase(final UserRegistrationRequest user, final String token) {
         FbUserRegistration fbUser = new FbUserRegistration();
+        Map<String, FbConnectedUser> map = new HashMap<>();
+        FbConnectedUser user1 = new FbConnectedUser();
         //base data
         String[] emailSplitted = user.getmEmail().split("@");
         fbUser.setmEmailSuffix(emailSplitted[1]);
         fbUser.setmRegisterPhone(user.getmPhoneNumber());
-        Map<String, FbConnectedUser> map = new HashMap<>();
-        map.put(user.getmUsername(), new FbConnectedUser());
-        fbUser.setMapOfUsers(map);
         fbUser.setmUniqueCode(user.getmUniqueCode());
 
+        user1.setUserName(user.getmUsername());
+
+        map.put("user_1", user1);
+
+        fbUser.setMapOfUsers(map);
+
         //add first user
-        mDatabase.child("users").child(emailSplitted[0]).setValue(fbUser)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        mView.doneRegistration(user.getmEmail(), user.getmPassword(), token);
-                    }
-                }).addOnCanceledListener(new OnCanceledListener() {
-            @Override
-            public void onCanceled() {
-                mView.showError(ErrorConverter.getMsgFromCode(new Throwable()));
-            }
-        });
+        mDatabase.child("users").child(emailSplitted[0]).setValue(fbUser).addOnSuccessListener(
+                aVoid -> mView.doneRegistration(user.getmEmail(), user.getmPassword(), token))
+                .addOnCanceledListener(
+                        () -> mView.showError(ErrorConverter.getMsgFromCode(new Throwable())));
     }
 }

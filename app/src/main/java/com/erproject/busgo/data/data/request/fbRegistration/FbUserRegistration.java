@@ -14,14 +14,6 @@ public class FbUserRegistration {
     public FbUserRegistration() {
     }
 
-    public FbUserRegistration(String mRegisterPhone, String mEmailSuffix, String mUniqueCode,
-                              Map<String, FbConnectedUser> mapOfUsers) {
-        this.mRegisterPhone = mRegisterPhone;
-        this.mEmailSuffix = mEmailSuffix;
-        this.mUniqueCode = mUniqueCode;
-        this.mapOfUsers = mapOfUsers;
-    }
-
     public String getmRegisterPhone() {
         return mRegisterPhone;
     }

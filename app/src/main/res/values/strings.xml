@@ -42,4 +42,5 @@
     <string name="string_warning_text">Warning!</string>
     <string name="string_disable_transfer_warning">It looks like you are passing your location.\nDisable location transfer and monitoring will be available.</string>
     <string name="string_disable_loading_warning">It seems that you are tracking user data.\nTurn off tracking and data transfer will be available</string>
+    <string name="string_users_phones">Users phones</string>
 </resources>

@@ -12,6 +12,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
 
+import com.erproject.busgo.BuildConfig;
 import com.erproject.busgo.R;
 import com.erproject.busgo.data.data.request.fbRegistration.FbConnectedUser;
 import com.erproject.busgo.data.data.simpleData.UserModel;
@@ -90,22 +91,21 @@ public class StartTrackService extends Service
         mTrackingUser = intent.getParcelableExtra(MODEL_EXTRAS);
         mUserId = intent.getStringExtra(USER_ID_EXTRAS);
 
-        this.mDatabase.child(getString(R.string.START_PATH)).child(mUserId)
-                .child(getString(R.string.MAP_USER_PATH)).child(mTrackingUser.getName())
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        UserModel userModel = new UserModel();
-                        userModel.setName(dataSnapshot.getKey());
-                        userModel.setUser(dataSnapshot.getValue(FbConnectedUser.class));
-                        copyFromNewObjectIfNeed(userModel);
-                    }
+        this.mDatabase.child(BuildConfig.START_PATH).child(mUserId).child(BuildConfig.MAP_USER_PATH)
+                .child(mTrackingUser.getName()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                UserModel userModel = new UserModel();
+                userModel.setName(dataSnapshot.getKey());
+                userModel.setUser(dataSnapshot.getValue(FbConnectedUser.class));
+                copyFromNewObjectIfNeed(userModel);
+            }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                    }
-                });
+            }
+        });
 
         startForeground();
 
@@ -167,8 +167,8 @@ public class StartTrackService extends Service
         HashMap<String, Object> mMap = new HashMap<>();
         mMap.put(mTrackingUser.getName(), user);
         Toast.makeText(this, "Update firebase", Toast.LENGTH_SHORT).show();
-        mDatabase.child(getString(R.string.START_PATH)).child(mUserId)
-                .child(getString(R.string.MAP_USER_PATH)).updateChildren(mMap);
+        mDatabase.child(BuildConfig.START_PATH).child(mUserId).child(BuildConfig.MAP_USER_PATH)
+                .updateChildren(mMap);
     }
 
     @Override

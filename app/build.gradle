@@ -14,10 +14,6 @@ android {
                 (project.findProperty("API_KEY_PLACE_FINDER") ?: "")
         resValue "string", "ACCESS_TOKEN_MAP",
                 (project.findProperty("ACCESS_TOKEN_MAP") ?: "")
-        resValue "string", "START_PATH",
-                (project.findProperty("START_PATH") ?: "")
-        resValue "string", "MAP_USER_PATH",
-                (project.findProperty("MAP_USER_PATH") ?: "")
 
         multiDexEnabled true
     }
@@ -25,6 +21,13 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            buildConfigField 'String', "START_PATH", START_PATH
+            buildConfigField 'String', "MAP_USER_PATH", MAP_USER_PATH
+        }
+        debug {
+            buildConfigField 'String', "START_PATH", START_PATH
+            buildConfigField 'String', "MAP_USER_PATH", MAP_USER_PATH
         }
     }
     // Fix RxJava

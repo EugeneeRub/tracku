@@ -90,6 +90,6 @@ public class SettingsActivity extends BaseActivityDagger {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-       // startActivity(MainActivity.newInstance(this));
+        // startActivity(MainActivity.newInstance(this));
     }
 }

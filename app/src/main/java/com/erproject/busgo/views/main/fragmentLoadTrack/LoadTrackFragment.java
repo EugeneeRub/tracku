@@ -15,6 +15,7 @@ import com.erproject.busgo.R;
 import com.erproject.busgo.base.BaseFragmentDagger;
 import com.erproject.busgo.data.data.simpleData.UserModel;
 import com.erproject.busgo.views.main.MainActivity;
+import com.erproject.busgo.views.main.fragmentLoadTrack.phones.PhonesActivity;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
@@ -56,6 +57,16 @@ public class LoadTrackFragment extends BaseFragmentDagger implements LoadTrackCo
 
     @Inject
     LoadTrackPresenter mPresenter;
+
+    @OnClick(R.id.fragment_load_track_phone_to_fab)
+    public void onFabPhonesClick() {
+        startActivity(PhonesActivity.newIntent(getContext()));
+    }
+
+    @OnClick(R.id.fragment_load_track_phone_to_fab)
+    public void onFabEditClick() {
+
+    }
 
     @OnClick(R.id.fragment_load_track_button_start)
     public void onBtnStartClicked() {
@@ -165,6 +176,7 @@ public class LoadTrackFragment extends BaseFragmentDagger implements LoadTrackCo
     @Override
     public void onResume() {
         super.onResume();
+        if (mCardEdit.getVisibility() == View.GONE) mCardEdit.setVisibility(View.VISIBLE);
         mPresenter.takeView(this);
     }
 
@@ -228,8 +240,8 @@ public class LoadTrackFragment extends BaseFragmentDagger implements LoadTrackCo
     private void showRadioButton(final CheckBox button, final UserModel model) {
         button.setVisibility(View.VISIBLE);
         if (model.getUser().getIsUsed())
-            button.setText(String.format("%s (Active)", model.getName()));
-        else button.setText(model.getName());
+            button.setText(String.format("%s (Active)", model.getUser().getUserName()));
+        else button.setText(model.getUser().getUserName());
 
         button.setTag(model);
 
