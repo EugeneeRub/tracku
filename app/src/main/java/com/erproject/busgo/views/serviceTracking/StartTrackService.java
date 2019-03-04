@@ -10,7 +10,6 @@ import android.os.Build;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
-import android.widget.Toast;
 
 import com.erproject.busgo.BuildConfig;
 import com.erproject.busgo.R;
@@ -115,19 +114,17 @@ public class StartTrackService extends Service
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Toast.makeText(this, "onDestroy", Toast.LENGTH_SHORT).show();
         stopTracking();
     }
 
     private void startForeground() {
-
         //PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, new Intent(), 0);
 
         Notification notification =
                 new NotificationCompat.Builder(this, CHANNEL_ID).setOngoing(true)
                         .setSmallIcon(R.drawable.ic_notification)
                         .setContentTitle(getString(R.string.app_name))
-                        .setContentText("Track monitor app is running").build();
+                        .setContentText(getString(R.string.string_track_is_running)).build();
 
         createNotificationChannel();
 
@@ -166,7 +163,6 @@ public class StartTrackService extends Service
     private void updateUserInFirebase(FbConnectedUser user) {
         HashMap<String, Object> mMap = new HashMap<>();
         mMap.put(mTrackingUser.getName(), user);
-        Toast.makeText(this, "Update firebase", Toast.LENGTH_SHORT).show();
         mDatabase.child(BuildConfig.START_PATH).child(mUserId).child(BuildConfig.MAP_USER_PATH)
                 .updateChildren(mMap);
     }

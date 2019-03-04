@@ -1,9 +1,12 @@
 package com.erproject.busgo.base;
 
 import android.support.annotation.IdRes;
+import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
+import android.view.ContextThemeWrapper;
 
 import com.erproject.busgo.R;
 import com.erproject.busgo.app.App;
@@ -101,5 +104,38 @@ public abstract class BaseActivityDagger extends DaggerAppCompatActivity {
                 setTheme(R.style.ThemeDark);
                 break;
         }
+    }
+
+    protected void showAlertDialog(String title, String msg, OnOkCancelClicked callback,
+                                   boolean isCancelEnable) {
+        AlertDialog.Builder builder =
+                new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.myDialog));
+        builder.setTitle(title);
+
+        builder.setMessage(msg);
+        builder.setPositiveButton(R.string.string_ok, (dialog, which) -> callback.onOkClicked());
+        if (isCancelEnable) builder.setNegativeButton(R.string.string_cancel,
+                (dialog, which) -> callback.onCancelClicked());
+        builder.show();
+    }
+
+    protected void showAlertDialog(@StringRes int title, @StringRes int msg,
+                                   OnOkCancelClicked callback, boolean isCancelEnable) {
+        AlertDialog.Builder builder =
+                new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.myDialog));
+        builder.setTitle(title);
+
+        builder.setMessage(msg);
+        builder.setPositiveButton(R.string.string_ok,
+                (dialog, which) -> callback.onCancelClicked());
+        if (isCancelEnable) builder.setNegativeButton(R.string.string_cancel,
+                (dialog, which) -> callback.onCancelClicked());
+        builder.show();
+    }
+
+    public interface OnOkCancelClicked {
+        void onOkClicked();
+
+        void onCancelClicked();
     }
 }

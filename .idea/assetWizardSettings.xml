@@ -45,7 +45,7 @@
                                 <PersistentState>
                                   <option name="children">
                                     <map>
-                                      <entry key="foregroundImage">
+                                      <entry key="foregroundClipArt">
                                         <value>
                                           <PersistentState>
                                             <option name="values">
@@ -56,6 +56,25 @@
                                           </PersistentState>
                                         </value>
                                       </entry>
+                                      <entry key="foregroundImage">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="color" value="000000" />
+                                                <entry key="scalingPercent" value="69" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
+                                    </map>
+                                  </option>
+                                  <option name="values">
+                                    <map>
+                                      <entry key="backgroundAssetType" value="COLOR" />
+                                      <entry key="backgroundColor" value="00574b" />
+                                      <entry key="foregroundImage" value="C:\Users\User\AndroidStudioProjects\BusGo\app\src\main\res\drawable\track_white.png" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -104,6 +123,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
+                                                <entry key="paddingPercent" value="-10" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -162,7 +182,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/navigation/ic_more_vert_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/maps/ic_person_pin_circle_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -173,7 +193,7 @@
                         <option name="values">
                           <map>
                             <entry key="color" value="008577" />
-                            <entry key="outputName" value="ic_more_green" />
+                            <entry key="outputName" value="ic_person_pin_green" />
                             <entry key="sourceFile" value="C:\Users\User" />
                           </map>
                         </option>

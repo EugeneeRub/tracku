@@ -30,6 +30,7 @@ public class StartTrackPresenter implements StartTrackContract.Presenter {
     private FbUserRegistration mUser;
     private String mUserId;
     private String mChoosedUser;
+    private FbConnectedUser mChoosedUserModel;
     private List<UserModel> mList;
     private boolean mIsUpdated;
 
@@ -89,6 +90,15 @@ public class StartTrackPresenter implements StartTrackContract.Presenter {
             it.remove();// avoids a ConcurrentModificationException
         }
 
+        if (mChoosedUserModel != null && mChoosedUser != null) {
+            FbConnectedUser user = mUser.getMapOfUsers().get(mChoosedUser);
+            if (user != null && !user.getIsUsed()) {
+                if (mView != null) {
+                    mView.stopTracking();
+                }
+            }
+        }
+
         if (mView != null && this.mUser != null) mView.updateState(mList);
     }
 
@@ -106,8 +116,9 @@ public class StartTrackPresenter implements StartTrackContract.Presenter {
     @Override
     public void updateDatabase(String name) {
         this.mChoosedUser = name;
+        this.mChoosedUserModel = mUser.getMapOfUsers().get(name);
         HashMap<String, Object> mMap = new HashMap<>();
-        mMap.put(name, mUser.getMapOfUsers().get(name));
+        mMap.put(name, mChoosedUserModel);
         mIsUpdated = false;
         mDatabase.child(BuildConfig.START_PATH).child(mUserId).child(BuildConfig.MAP_USER_PATH)
                 .updateChildren(mMap);
@@ -121,6 +132,7 @@ public class StartTrackPresenter implements StartTrackContract.Presenter {
 
     void stopTracking() {
         if (mChoosedUser == null) return;
+        this.mChoosedUserModel = null;
         FbConnectedUser user = mUser.getMapOfUsers().get(mChoosedUser);
         if (user != null) user.setIsUsed(false);
 

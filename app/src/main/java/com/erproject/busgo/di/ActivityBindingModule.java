@@ -4,6 +4,8 @@ import com.erproject.busgo.di.scoped.ActivityScoped;
 import com.erproject.busgo.views.login.LoginActivity;
 import com.erproject.busgo.views.main.MainActivity;
 import com.erproject.busgo.views.main.MainActivityModule;
+import com.erproject.busgo.views.main.fragmentLoadTrack.clearUsers.ClearUsersDataActivity;
+import com.erproject.busgo.views.main.fragmentLoadTrack.editUsers.EditUsersActivity;
 import com.erproject.busgo.views.main.fragmentLoadTrack.phones.PhonesActivity;
 import com.erproject.busgo.views.registration.RegistrationActivity;
 import com.erproject.busgo.views.settings.SettingsActivity;
@@ -34,4 +36,12 @@ public abstract class ActivityBindingModule {
     @ActivityScoped
     @ContributesAndroidInjector()
     abstract PhonesActivity bindPhonesActivity();
+
+    @ActivityScoped
+    @ContributesAndroidInjector()
+    abstract EditUsersActivity bindEditUsersActivity();
+
+    @ActivityScoped
+    @ContributesAndroidInjector()
+    abstract ClearUsersDataActivity bindClearUsersDataActivity();
 }

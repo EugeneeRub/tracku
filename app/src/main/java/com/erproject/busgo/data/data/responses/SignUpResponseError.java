@@ -18,7 +18,7 @@ public class SignUpResponseError {
         return mEmailError;
     }
 
-    public String getmUsernameError() {
+    public String getmUserNameError() {
         return mUsernameError;
     }
 

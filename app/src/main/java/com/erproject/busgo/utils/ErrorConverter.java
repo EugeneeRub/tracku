@@ -1,5 +1,7 @@
 package com.erproject.busgo.utils;
 
+import com.erproject.busgo.R;
+import com.erproject.busgo.app.App;
 import com.erproject.busgo.data.data.responses.SignUpResponseError;
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
@@ -17,7 +19,8 @@ public class ErrorConverter {
             ResponseBody responseBody = ((HttpException) e).response().errorBody();
             try {
                 Gson gson = new Gson();
-                TypeAdapter<SignUpResponseError> adapter = gson.getAdapter(SignUpResponseError.class);
+                TypeAdapter<SignUpResponseError> adapter =
+                        gson.getAdapter(SignUpResponseError.class);
 
                 return adapter.fromJson(Objects.requireNonNull(responseBody).string());
             } catch (IOException e1) {
@@ -35,15 +38,15 @@ public class ErrorConverter {
             String msg;
             switch (code) {
                 case 401:
-                    msg = "User does not exist";
+                    msg = App.getInstance().getString(R.string.string_user_does_not_exist);
                     break;
                 case 403:
                 case 404:
                 default:
-                    msg = "Something went wrong on the server";
+                    msg = App.getInstance().getString(R.string.string_something_went_wrong_on_the_server);
                     break;
             }
             return msg;
-        } else return "Something went wrong on the server";
+        } else return App.getInstance().getString(R.string.string_something_went_wrong_on_the_server);
     }
 }

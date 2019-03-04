@@ -10,11 +10,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.erproject.busgo.R;
 import com.erproject.busgo.base.BaseFragmentDagger;
 import com.erproject.busgo.data.data.simpleData.UserModel;
 import com.erproject.busgo.views.main.MainActivity;
+import com.erproject.busgo.views.main.fragmentLoadTrack.clearUsers.ClearUsersDataActivity;
+import com.erproject.busgo.views.main.fragmentLoadTrack.editUsers.EditUsersActivity;
 import com.erproject.busgo.views.main.fragmentLoadTrack.phones.PhonesActivity;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 
@@ -32,12 +36,18 @@ public class LoadTrackFragment extends BaseFragmentDagger implements LoadTrackCo
     FloatingActionButton mImageArrow;
     @BindView(R.id.fragment_load_track_edit_users_fab)
     FloatingActionButton mFabEdit;
+    @BindView(R.id.fragment_load_track_edit_users_search)
+    FloatingActionButton mFabSearchUsers;
     @BindView(R.id.fragment_load_track_show_more_fab)
     FloatingActionButton mFabMore;
     @BindView(R.id.fragment_load_track_phone_to_fab)
     FloatingActionButton mFabPhone;
+    @BindView(R.id.fragment_load_track_clear_fab)
+    FloatingActionButton mFabClear;
     @BindView(R.id.fragment_load_track_card_edit)
     CardView mCardEdit;
+    @BindView(R.id.fragment_load_track_card_search)
+    CardView mCardSearch;
     @BindView(R.id.fragment_load_track_button_start)
     Button mButtonLoadTrack;
 
@@ -49,6 +59,15 @@ public class LoadTrackFragment extends BaseFragmentDagger implements LoadTrackCo
     CheckBox mBtnUser3;
     @BindView(R.id.fragment_load_track_id4)
     CheckBox mBtnUser4;
+
+    @BindView(R.id.fragment_load_search_id1)
+    TextView mSearchUser1;
+    @BindView(R.id.fragment_load_search_id2)
+    TextView mSearchUser2;
+    @BindView(R.id.fragment_load_search_id3)
+    TextView mSearchUser3;
+    @BindView(R.id.fragment_load_search_id4)
+    TextView mSearchUser4;
 
     private boolean mIsHidingFirst;
     private boolean mIsHidingSecond;
@@ -63,9 +82,14 @@ public class LoadTrackFragment extends BaseFragmentDagger implements LoadTrackCo
         startActivity(PhonesActivity.newIntent(getContext()));
     }
 
-    @OnClick(R.id.fragment_load_track_phone_to_fab)
-    public void onFabEditClick() {
+    @OnClick(R.id.fragment_load_track_clear_fab)
+    public void onFabClearClick() {
+        startActivity(ClearUsersDataActivity.newIntent(getContext()));
+    }
 
+    @OnClick(R.id.fragment_load_track_edit_users_fab)
+    public void onFabEditClick() {
+        startActivity(EditUsersActivity.newIntent(getContext()));
     }
 
     @OnClick(R.id.fragment_load_track_button_start)
@@ -77,6 +101,15 @@ public class LoadTrackFragment extends BaseFragmentDagger implements LoadTrackCo
                     getString(R.string.string_disable_transfer_warning));
         } else {
             onAllowClicked();
+        }
+    }
+
+    @OnClick(R.id.fragment_load_track_edit_users_search)
+    public void onBtnSearchClicked() {
+        if (mCardSearch.getVisibility() == View.VISIBLE) {
+            mCardSearch.setVisibility(View.GONE);
+        } else {
+            mCardSearch.setVisibility(View.VISIBLE);
         }
     }
 
@@ -119,11 +152,16 @@ public class LoadTrackFragment extends BaseFragmentDagger implements LoadTrackCo
         if (!mIsHidingSecond) {
             mIsHidingSecond = true;
 
+            mFabSearchUsers.setVisibility(View.VISIBLE);
+
             hideFabViews();
             mButtonLoadTrack.setEnabled(true);
             mImageArrow.setEnabled(true);
         } else {
             mIsHidingSecond = false;
+
+            mCardSearch.setVisibility(View.GONE);
+            mFabSearchUsers.setVisibility(View.GONE);
 
             showFabViews();
             mButtonLoadTrack.setEnabled(false);
@@ -135,25 +173,35 @@ public class LoadTrackFragment extends BaseFragmentDagger implements LoadTrackCo
         mFabEdit.animate().alpha(0.0f).translationX(mFabEdit.getWidth());
         mFabPhone.animate().alpha(0.0f).translationX(mFabPhone.getWidth());
         mCardEdit.animate().alpha(0.0f).translationX(mCardEdit.getWidth());
+        mFabClear.animate().alpha(0.0f).translationX(mCardEdit.getWidth());
     }
 
     private void showFabViews() {
         mFabPhone.animate().alpha(1.0f).translationX(0);
         mFabEdit.animate().alpha(1.0f).translationX(0);
         mCardEdit.animate().alpha(1.0f).translationX(0);
+        mFabClear.animate().alpha(1.0f).translationX(0);
 
         mCardEdit.setVisibility(View.VISIBLE);
     }
 
     private void hideAnimFirstViews() {
+        if (mCardSearch.getVisibility() == View.VISIBLE) {
+            mCardSearch.animate().alpha(0.0f).translationX(-mCardSearch.getWidth());
+        }
         mButtonLoadTrack.animate().alpha(0.0f).translationY(mButtonLoadTrack.getHeight());
         mFabMore.animate().alpha(0.0f).translationX(mFabMore.getWidth());
+        mFabSearchUsers.animate().alpha(0.0f).translationX(mFabSearchUsers.getWidth());
     }
 
     private void showAnimFirstViews() {
+        if (mCardSearch.getVisibility() == View.VISIBLE) {
+            mCardSearch.animate().alpha(1.0f).translationX(0);
+        }
         mButtonLoadTrack.animate().alpha(1.0f).translationY(0);
         mButtonLoadTrack.setVisibility(View.VISIBLE);
         mFabMore.animate().alpha(1.0f).translationX(0);
+        mFabSearchUsers.animate().alpha(1.0f).translationX(0);
     }
 
     @Inject
@@ -224,23 +272,27 @@ public class LoadTrackFragment extends BaseFragmentDagger implements LoadTrackCo
             UserModel model = list.get(i);
             if (i == 0) {
                 showRadioButton(mBtnUser1, model);
+                showSearchButton(mSearchUser1, model);
             }
             if (i == 1) {
                 showRadioButton(mBtnUser2, model);
+                showSearchButton(mSearchUser2, model);
             }
             if (i == 2) {
                 showRadioButton(mBtnUser3, model);
+                showSearchButton(mSearchUser3, model);
             }
             if (i == 3) {
                 showRadioButton(mBtnUser4, model);
+                showSearchButton(mSearchUser4, model);
             }
         }
     }
 
     private void showRadioButton(final CheckBox button, final UserModel model) {
         button.setVisibility(View.VISIBLE);
-        if (model.getUser().getIsUsed())
-            button.setText(String.format("%s (Active)", model.getUser().getUserName()));
+        if (model.getUser().getIsUsed()) button.setText(
+                String.format("%s %s", model.getUser().getUserName(), getString(R.string.string_active)));
         else button.setText(model.getUser().getUserName());
 
         button.setTag(model);
@@ -249,6 +301,24 @@ public class LoadTrackFragment extends BaseFragmentDagger implements LoadTrackCo
             model.getUser().setIsTracking(isChecked);
             mPresenter.updateDatabase();
         });
+    }
+
+    private void showSearchButton(final TextView button, final UserModel model) {
+        button.setVisibility(View.VISIBLE);
+        if (model.getUser().getIsUsed()) button.setText(
+                String.format("%s %s", model.getUser().getUserName(), getString(R.string.string_active)));
+        else button.setText(model.getUser().getUserName());
+
+        button.setOnClickListener(v -> {
+            if (model.getUser().getIsUsed()) {
+                if (getActivity() != null)
+                    ((MainActivity) getActivity()).showUserOnMap(model.getUser());
+            } else {
+                Toast.makeText(getmContext(), getString(R.string.string_can_not_find_user),
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     private void hideRadioButtons() {

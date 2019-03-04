@@ -2,12 +2,13 @@ package com.erproject.busgo.views.registration;
 
 import com.erproject.busgo.base.mvpInterfaces.BasePresenter;
 import com.erproject.busgo.base.mvpInterfaces.BaseView;
+import com.erproject.busgo.data.data.responses.SignUpResponseError;
 
 public interface RegistrationActivityContract {
     interface View extends BaseView {
         void doneRegistration(String username, String password, String token);
 
-        void setEmailError(String error);
+        void setEmailError(SignUpResponseError error);
 
         void showToastError(String msg);
     }

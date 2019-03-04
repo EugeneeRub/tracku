@@ -26,12 +26,12 @@ public class PhonesHolder extends RecyclerView.ViewHolder {
 
     public void bind(UserModel user) {
         if (user != null && user.getUser() != null && user.getUser().getPhone() != null) {
-            mTitle.setText(user.getName());
+            mTitle.setText(user.getUser().getUserName());
             mPhone.setText(user.getUser().getPhone());
 
             itemView.setOnClickListener(v -> {
-                Intent intent =
-                        new Intent(Intent.ACTION_CALL_BUTTON, Uri.parse(user.getUser().getPhone()));
+                Intent intent = new Intent(Intent.ACTION_DIAL,
+                        Uri.parse("tel:" + user.getUser().getPhone()));
                 itemView.getContext().startActivity(intent);
             });
         }

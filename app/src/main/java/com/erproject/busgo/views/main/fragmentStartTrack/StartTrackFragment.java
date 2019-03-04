@@ -44,6 +44,8 @@ public class StartTrackFragment extends BaseFragmentDagger implements StartTrack
     FloatingActionButton mImageArrow;
     @BindView(R.id.fragment_start_track_phone_fab)
     FloatingActionButton mPhoneFab;
+    @BindView(R.id.fragment_start_track_show_me)
+    FloatingActionButton mShowMeFab;
     @BindView(R.id.fragment_start_track_button_start)
     Button mButtonStartTrack;
     @BindView(R.id.fragment_start_track_card_layout_choose)
@@ -67,22 +69,6 @@ public class StartTrackFragment extends BaseFragmentDagger implements StartTrack
 
     @Inject
     StartTrackPresenter mPresenter;
-
-//    @OnCheckedChanged({R.id.fragment_start_track_id1, R.id.fragment_start_track_id2,
-//            R.id.fragment_start_track_id3, R.id.fragment_start_track_id4})
-//    @SuppressWarnings("unused")
-//    public void onCheckedChanged(CompoundButton button, boolean isChecked) {
-//        switch (button.getId()) {
-//            case R.id.fragment_start_track_id1:
-//                break;
-//            case R.id.fragment_start_track_id2:
-//                break;
-//            case R.id.fragment_start_track_id3:
-//                break;
-//            case R.id.fragment_start_track_id4:
-//                break;
-//        }
-//    }
 
     @OnClick(R.id.fragment_start_track_hide_all_layout)
     public void onArrowClicked() {
@@ -141,6 +127,11 @@ public class StartTrackFragment extends BaseFragmentDagger implements StartTrack
         hideCard();
     }
 
+    @OnClick(R.id.fragment_start_track_show_me)
+    public void onShowMeClicked() {
+        if (getActivity() != null) ((MainActivity) getActivity()).showLastMyLoaction();
+    }
+
     private void hideCard() {
         mCardChoose.setVisibility(View.GONE);
         mButtonStartTrack.setEnabled(true);
@@ -156,6 +147,7 @@ public class StartTrackFragment extends BaseFragmentDagger implements StartTrack
 
     private void hideByAnimAllViews() {
         mButtonStartTrack.animate().alpha(0.0f).translationY(mButtonStartTrack.getHeight());
+        mShowMeFab.animate().alpha(0.0f).translationX(-mShowMeFab.getWidth());
         if (mPhoneFab.getVisibility() == View.VISIBLE) {
             mPhoneFab.animate().alpha(0.0f).translationX(mPhoneFab.getWidth());
         }
@@ -166,6 +158,7 @@ public class StartTrackFragment extends BaseFragmentDagger implements StartTrack
 
     private void showByAnimAllViews() {
         mButtonStartTrack.animate().alpha(1.0f).translationY(0);
+        mShowMeFab.animate().alpha(1.0f).translationX(0);
         mButtonStartTrack.setVisibility(View.VISIBLE);
         if (mPhoneFab.getVisibility() == View.VISIBLE) {
             mPhoneFab.animate().alpha(1.0f).translationX(0);
@@ -256,7 +249,8 @@ public class StartTrackFragment extends BaseFragmentDagger implements StartTrack
             button.setOnClickListener(v -> {
                 if (!model.getUser().getIsUsed()) {
                     model.getUser().setIsUsed(true);
-                    button.setText(String.format("%s (in use)", model.getUser().getUserName()));
+                    button.setText(String.format("%s %s", model.getUser().getUserName(),
+                            getString(R.string.string_in_use)));
                 } else {
                     model.getUser().setIsUsed(false);
                     button.setText(model.getUser().getUserName());
@@ -267,7 +261,8 @@ public class StartTrackFragment extends BaseFragmentDagger implements StartTrack
         } else {
             button.setEnabled(false);
             button.setOnClickListener(null);
-            button.setText(String.format("%s (in use)", model.getUser().getUserName()));
+            button.setText(String.format("%s %s", model.getUser().getUserName(),
+                    getString(R.string.string_in_use)));
         }
     }
 
@@ -278,7 +273,8 @@ public class StartTrackFragment extends BaseFragmentDagger implements StartTrack
         mBtnUser4.setVisibility(View.GONE);
     }
 
-    private void stopTracking() {
+    @Override
+    public void stopTracking() {
         ((MainActivity) Objects.requireNonNull(getActivity())).setIsBusyStart(false);
         mCardTitle.setVisibility(View.GONE);
         mPhoneFab.setVisibility(View.GONE);
@@ -297,7 +293,7 @@ public class StartTrackFragment extends BaseFragmentDagger implements StartTrack
         mPhoneFab.setVisibility(View.VISIBLE);
 
         mButtonStartTrack.setText(R.string.string_stop_transfer_data);
-        mTextTitle.setText(String.format(" User: \"%s\" ", userName));
+        mTextTitle.setText(String.format(" %s: \"%s\" ", getString(R.string.string_user), userName));
         hideCard();
 
         mPresenter.updateDatabase(userID);

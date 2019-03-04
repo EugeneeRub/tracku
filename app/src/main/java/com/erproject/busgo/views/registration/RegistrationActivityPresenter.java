@@ -51,7 +51,7 @@ public class RegistrationActivityPresenter implements RegistrationActivityContra
             @Override
             public void onError(Throwable e) {
                 if (((HttpException) e).code() == 409) {
-                    mView.setEmailError(ErrorConverter.getErrorAuth(e).getmEmailError());
+                    mView.setEmailError(ErrorConverter.getErrorAuth(e));
                 } else {
                     mView.showError(ErrorConverter.getMsgFromCode(e));
                 }

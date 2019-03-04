@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TrackU</string>
+    <!-- Navigation Menu -->
+    <string name="string_open_drawer">Открыть холст</string>
+    <string name="string_close_drawer">Закрыть холст</string>
+    <string name="string_check">Проверить</string>
+    <string name="string_login">Войти</string>
+    <string name="string_email">Почта</string>
+    <string name="string_no_account">Нет аккаунта,</string>
+    <string name="string_sign_up">Зарегистрироваться</string>
+    <string name="string_have_an_account">Уже есть аккаунт?</string>
+    <string name="string_username">Пользователь</string>
+    <string name="string_phone">Телефон</string>
+    <string name="string_password">Пароль</string>
+    <string name="string_log_out">Выйти</string>
+
+    <string name="string_ok">Oк</string>
+    <string name="string_cancel">Отмена</string>
+
+    <string name="string_gps_warning">Для точного определения местоположения включите GPS в настройках</string>
+    <string name="string_settings">Настройки</string>
+    <string name="string_start_track">Начать передачу</string>
+    <string name="string_monitor_users">Отслеживать пользователей</string>
+    <string name="string_map">Карта</string>
+    <string name="string_allow_observation">Разрешить наблюдение</string>
+    <string name="string_stop_observation">Прекратить наблюдение</string>
+    <string name="string_allow_transfer_data">Разрешить передачу</string>
+    <string name="string_stop_transfer_data">Остановить передачу</string>
+    <string name="string_unique_code">Уникальный код</string>
+    <string name="string_unique_code_warning"> Уникальный код используется для входа в систему отслеживания пользователей.\n\nПередавать код не рекомендуется, кроме тех кому вы доверяете безопасность ваших данных и данных пользователей.</string>
+    <string name="string_unique_code_warning2">Эта функция позволяет Вам отследить местположение пользователей.\n\nЧтобы войти и подтвердить что вы создатель, введите уникальный ключ введённый во время регистрайции.</string>
+    <string name="string_monitor_users_mode">Отслеживание пользователей</string>
+    <string name="string_next">Далее</string>
+    <string name="string_enter_the_unique_code">Введите уникальный код</string>
+    <string name="string_close">Закрыть</string>
+    <string name="string_chose_users">Выбрать пользователей</string>
+    <string name="string_find_users">Найти польз. на карте</string>
+    <string name="string_choose_user">Выбрать пользователя</string>
+    <string name="string_warning_text">Предупреждение!</string>
+    <string name="string_disable_transfer_warning">Кажется что вы передаете ваше местоположение.\nОтключите передачу местоположенияи и отслеживание будет доступно.</string>
+    <string name="string_disable_loading_warning">Кажется что вы отслеживаете данные пользователей.\nОтключите отслеживание и передача местоположения будет доступна.</string>
+    <string name="string_users_phones">Номера тел. пользователей</string>
+    <string name="string_clear_data">Очистить трек данные</string>
+    <string name="string_edit_users">Редактировать пользователей</string>
+    <string name="string_phone_number">Номер телефона</string>
+    <string name="string_username_error">Пользователь пуст</string>
+    <string name="string_unique_code_with_question">Уникальный код?</string>
+    <string name="string_unique_code_is_empty">Уникальный код пуст!</string>
+    <string name="string_user_does_not_exist">Пользователь не существует</string>
+    <string name="string_something_went_wrong_on_the_server">Что-то пошло не так на сервере</string>
+    <string name="string_email_is_empty">Почта пуста</string>
+    <string name="string_email_is_not_correct">Почта не правильная</string>
+    <string name="string_password_is_empty">Пороль пуст</string>
+    <string name="string_password_must_be_six">Пороль должен быть больше 6 символов.</string>
+    <string name="string_track_is_running">TrackU работает</string>
+    <string name="string_unique_code_can_not_match">Уникальный код не может совпадать с поролем</string>
+    <string name="string_phone_is_empty">Номер телефона пуст</string>
+    <string name="string_username_is_empty">Пользователь пуст</string>
+    <string name="string_codes_do_not_match">Коды не совпадают</string>
+    <string name="string_active">(Активный)</string>
+    <string name="string_can_not_find_user">Не могу найти пользователя</string>
+    <string name="string_warning">Предупреждение!</string>
+    <string name="string_you_want_to_clear_bla_bla">Вы хотите очистить последние трек данные \"</string>
+    <string name="string_you_want_to_clear_bla_bla_second_part">\", действительно хотите сделать это?</string>
+    <string name="string_gps_is_disabled">Кажется что GPS отключен, не желаете ли его включить?</string>
+    <string name="string_yes">Да</string>
+    <string name="string_no">Нет</string>
+    <string name="string_in_use">(используется)</string>
+    <string name="string_user">Пользователь</string>
+    <string name="string_theme">Тема</string>
+</resources>

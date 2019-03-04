@@ -1,5 +1,6 @@
 package com.erproject.busgo.views.main.fragmentMap;
 
+import android.location.Location;
 import android.support.annotation.Nullable;
 
 import com.erproject.busgo.data.data.simpleData.UserModel;
@@ -12,7 +13,8 @@ public class MapPresenter implements MapContract.Presenter {
 
     @Nullable
     private MapContract.View mView;
-    private List<UserModel> savedActiveUsers;
+    private List<UserModel> mSavedActiveUsers;
+    private Location mLastLocation;
 
     @Inject
     MapPresenter() {
@@ -30,14 +32,23 @@ public class MapPresenter implements MapContract.Presenter {
 
     @Override
     public void checkAndShow(List<UserModel> activeUsers) {
-        savedActiveUsers = activeUsers;
+        mSavedActiveUsers = activeUsers;
         if (mView != null) {
             mView.stopShowingUsers();
             mView.showUsers(activeUsers);
         }
     }
 
-    List<UserModel> getSavedActiveUsers() {
-        return savedActiveUsers;
+    @Override
+    public void saveLastLocation(Location lastLocation) {
+        this.mLastLocation = lastLocation;
+    }
+
+    List<UserModel> getmSavedActiveUsers() {
+        return mSavedActiveUsers;
+    }
+
+    public Location getmLastLocation() {
+        return mLastLocation;
     }
 }

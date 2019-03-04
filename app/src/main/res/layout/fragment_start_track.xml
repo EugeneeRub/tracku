@@ -6,6 +6,18 @@
     android:layout_height="match_parent">
 
     <com.getbase.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fragment_start_track_show_me"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:fab_colorNormal="@color/colorCustomWhite"
+        app:fab_icon="@drawable/ic_person_pin_green"
+        app:fab_size="mini"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.getbase.floatingactionbutton.FloatingActionButton
         android:id="@+id/fragment_start_track_phone_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

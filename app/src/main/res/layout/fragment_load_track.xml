@@ -31,6 +31,19 @@
         app:layout_constraintTop_toBottomOf="@+id/fragment_load_track_show_more_fab" />
 
     <com.getbase.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fragment_load_track_edit_users_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
+        android:visibility="gone"
+        app:fab_colorNormal="@color/colorCustomWhite"
+        app:fab_icon="@drawable/ic_person_pin_green"
+        app:fab_size="mini"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_load_track_show_more_fab" />
+
+    <com.getbase.floatingactionbutton.FloatingActionButton
         android:id="@+id/fragment_load_track_phone_to_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -42,6 +55,19 @@
         app:fab_size="mini"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fragment_load_track_edit_users_fab" />
+
+    <com.getbase.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fragment_load_track_clear_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
+        android:visibility="visible"
+        app:fab_colorNormal="@color/colorCustomWhite"
+        app:fab_icon="@drawable/ic_erase"
+        app:fab_size="mini"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_load_track_phone_to_fab" />
 
     <Button
         android:id="@+id/fragment_load_track_button_start"
@@ -69,6 +95,94 @@
         app:fab_size="mini"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/fragment_load_track_card_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_8dp"
+        android:visibility="gone"
+        app:cardCornerRadius="@dimen/_16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/fragment_load_track_card_search_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_8dp"
+                android:layout_marginTop="@dimen/_8dp"
+                android:layout_marginEnd="@dimen/_8dp"
+                android:layout_marginBottom="@dimen/_8dp"
+                android:background="?attr/selectableItemBackground"
+                android:padding="@dimen/_4dp"
+                android:text="@string/string_find_users"
+                android:textColor="?attr/colorPrimaryText"
+                android:textSize="@dimen/_18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fragment_load_track_card_search_text">
+
+                <TextView
+                    android:id="@+id/fragment_load_search_id1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_8dp"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_16sp"
+                    android:visibility="gone"
+                    tools:text="Chanj" />
+
+                <TextView
+                    android:id="@+id/fragment_load_search_id2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_8dp"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_16sp"
+                    android:visibility="gone"
+                    tools:text="Chanj" />
+
+                <TextView
+                    android:id="@+id/fragment_load_search_id3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_8dp"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_16sp"
+                    android:visibility="gone"
+                    tools:text="Chanj" />
+
+                <TextView
+                    android:id="@+id/fragment_load_search_id4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/_8dp"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_16sp"
+                    android:visibility="gone"
+                    tools:text="Chanj" />
+
+            </LinearLayout>
+
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
         android:id="@+id/fragment_load_track_card_edit"

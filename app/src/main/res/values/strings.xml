@@ -1,11 +1,8 @@
 <resources>
-    <string name="app_name">Track Monitor</string>
-
+    <string name="app_name">TrackU</string>
     <!-- Navigation Menu -->
     <string name="string_open_drawer">Open Drawer</string>
     <string name="string_close_drawer">Close Drawer</string>
-    <string name="string_value">Value</string>
-    <string name="string_please_enter_the_value">Please, enter the value</string>
     <string name="string_check">Check</string>
     <string name="string_login">Sign in</string>
     <string name="string_email">Email</string>
@@ -17,7 +14,7 @@
     <string name="string_password">Password</string>
     <string name="string_log_out">Log out</string>
 
-    <string name="string_ok">OK</string>
+    <string name="string_ok">Ok</string>
     <string name="string_cancel">Cancel</string>
 
     <string name="string_gps_warning">For accurate location, turn on GPS in settings</string>
@@ -25,7 +22,6 @@
     <string name="string_start_track">Start Track</string>
     <string name="string_monitor_users">Track users</string>
     <string name="string_map">Map</string>
-    <string name="string_general">General</string>
     <string name="string_allow_observation">Allow observation</string>
     <string name="string_stop_observation">Stop observation</string>
     <string name="string_allow_transfer_data">Allow transfer data</string>
@@ -38,9 +34,38 @@
     <string name="string_enter_the_unique_code">Enter the unique code</string>
     <string name="string_close">Close</string>
     <string name="string_chose_users">Choose users</string>
+    <string name="string_find_users">Find users on map</string>
     <string name="string_choose_user">Choose user</string>
     <string name="string_warning_text">Warning!</string>
     <string name="string_disable_transfer_warning">It looks like you are passing your location.\nDisable location transfer and monitoring will be available.</string>
     <string name="string_disable_loading_warning">It seems that you are tracking user data.\nTurn off tracking and data transfer will be available</string>
     <string name="string_users_phones">Users phones</string>
+    <string name="string_clear_data">Clear track data</string>
+    <string name="string_edit_users">Edit users</string>
+    <string name="string_phone_number">Phone number</string>
+    <string name="string_username_error">Username is empty</string>
+    <string name="string_unique_code_with_question">Unique code?</string>
+    <string name="string_unique_code_is_empty">Unique code is empty!</string>
+    <string name="string_user_does_not_exist">User does not exist</string>
+    <string name="string_something_went_wrong_on_the_server">Something went wrong on the server</string>
+    <string name="string_email_is_empty">Email is empty</string>
+    <string name="string_email_is_not_correct">Email isn`t correct</string>
+    <string name="string_password_is_empty">Password is empty</string>
+    <string name="string_password_must_be_six">Password must be more than 6 characters.</string>
+    <string name="string_track_is_running">TrackU app is running</string>
+    <string name="string_unique_code_can_not_match">Unique code can not match the password</string>
+    <string name="string_phone_is_empty">Phone is empty</string>
+    <string name="string_username_is_empty">Username is empty</string>
+    <string name="string_codes_do_not_match">Codes don`t match</string>
+    <string name="string_active">(Active)</string>
+    <string name="string_can_not_find_user">Can not find user</string>
+    <string name="string_warning">Warning!</string>
+    <string name="string_you_want_to_clear_bla_bla">You want to clear last track data \"</string>
+    <string name="string_you_want_to_clear_bla_bla_second_part">\", do you really want to do this?</string>
+    <string name="string_gps_is_disabled">Your GPS seems to be disabled, do you want to enable it?</string>
+    <string name="string_yes">Yes</string>
+    <string name="string_no">No</string>
+    <string name="string_in_use">(in use)</string>
+    <string name="string_user">User</string>
+    <string name="string_theme">Theme</string>
 </resources>

@@ -13,6 +13,8 @@ public interface StartTrackContract {
         Context getmContext();
 
         void updateState(List<UserModel> mUser);
+
+        void stopTracking();
     }
 
     interface Presenter extends BasePresenter<View> {

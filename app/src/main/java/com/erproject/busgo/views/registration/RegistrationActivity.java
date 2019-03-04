@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.erproject.busgo.R;
 import com.erproject.busgo.base.BaseActivityDagger;
 import com.erproject.busgo.customViews.FixedTextInputEditText;
+import com.erproject.busgo.data.data.responses.SignUpResponseError;
 import com.erproject.busgo.services.authManager.AuthController;
 import com.erproject.busgo.utils.TextValidWatcher;
 import com.erproject.busgo.views.main.MainActivity;
@@ -126,39 +127,38 @@ public class RegistrationActivity extends BaseActivityDagger
 
         if (mEtUsername.getText().toString().isEmpty()) {
             validCounter++;
-            mLayoutUsername.setError("Username is empty");
+            mLayoutUsername.setError(getString(R.string.string_username_is_empty));
         }
 
         if (mEtPhone.getText().toString().isEmpty()) {
             validCounter++;
-            mLayoutPhone.setError("Phone is empty");
+            mLayoutPhone.setError(getString(R.string.string_phone_is_empty));
         }
 
         if (mEtEmail.getText().toString().isEmpty()) {
             validCounter++;
-            mLayoutEmail.setError("Email is empty");
+            mLayoutEmail.setError(getString(R.string.string_email_is_empty));
         } else if (TextValidWatcher.isEmailValid(mEtEmail.getText().toString())) {
             validCounter++;
-            mLayoutEmail.setError("Email isn`t correct");
+            mLayoutEmail.setError(getString(R.string.string_email_is_not_correct));
         }
 
         if (mEtUniqueCode.getText().toString().isEmpty()) {
             validCounter++;
-            mLayoutUniqueCode.setError("Unique code is empty");
+            mLayoutUniqueCode.setError(getString(R.string.string_unique_code_is_empty));
         } else {
             if (mEtUniqueCode.getText().toString().equals(mEtPassword.getText().toString())) {
                 validCounter++;
-                mLayoutUniqueCode.setError("Unique code can not match the password");
+                mLayoutUniqueCode.setError(getString(R.string.string_unique_code_can_not_match));
             }
         }
 
-
         if (mEtPassword.getText().toString().isEmpty()) {
             validCounter++;
-            mLayoutPassword.setError("Password is empty");
+            mLayoutPassword.setError(getString(R.string.string_password_is_empty));
         } else if (mEtPassword.getText().toString().length() < 6) {
             validCounter++;
-            mLayoutPassword.setError("Password must be more than 6 characters.");
+            mLayoutPassword.setError(getString(R.string.string_password_must_be_six));
         }
 
         if (validCounter > 0) isCanLogin = false;
@@ -205,9 +205,15 @@ public class RegistrationActivity extends BaseActivityDagger
     }
 
     @Override
-    public void setEmailError(String error) {
+    public void setEmailError(SignUpResponseError error) {
         mProgress.setVisibility(View.GONE);
-        mLayoutEmail.setError(error);
+        if (error == null) return;
+        if (error.getmEmailError() != null) {
+            mLayoutEmail.setError(error.getmEmailError());
+            if (error.getmPhoneError() != null) mLayoutPhone.setError(error.getmPhoneError());
+            if (error.getmUserNameError() != null)
+                mLayoutUsername.setError(error.getmUserNameError());
+        }
     }
 
     @Override
@@ -226,22 +232,19 @@ public class RegistrationActivity extends BaseActivityDagger
     private void prepareUniqueAlertNotification() {
         builder = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.myDialog));
 
-        mEtUniqueCode.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-                    if (event.getRawX() >= (mEtUniqueCode.getRight() -
-                            mEtUniqueCode.getCompoundDrawables()[2].getBounds().width())) {
-                        builder.setTitle("Unique code?");
+        mEtUniqueCode.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                if (event.getRawX() >= (mEtUniqueCode.getRight() -
+                        mEtUniqueCode.getCompoundDrawables()[2].getBounds().width())) {
+                    builder.setTitle(R.string.string_unique_code_with_question);
 
-                        builder.setMessage(R.string.string_unique_code_warning);
-                        builder.setPositiveButton(R.string.string_ok, null);
-                        builder.show();
-                        return true;
-                    }
+                    builder.setMessage(R.string.string_unique_code_warning);
+                    builder.setPositiveButton(R.string.string_ok, null);
+                    builder.show();
+                    return true;
                 }
-                return false;
             }
+            return false;
         });
     }
 }

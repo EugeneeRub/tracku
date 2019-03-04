@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.erproject.busgo.R;
 import com.erproject.busgo.base.BaseActivityDagger;
+import com.erproject.busgo.data.data.request.fbRegistration.FbConnectedUser;
 import com.erproject.busgo.data.data.simpleData.UserModel;
 import com.erproject.busgo.dialogs.EnterCodeDialog;
 import com.erproject.busgo.services.authManager.AuthController;
@@ -36,7 +37,6 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends BaseActivityDagger
         implements NavigationView.OnNavigationItemSelectedListener, MainActivityContract.View {
-
     @BindView(R.id.drawer_layout)
     DrawerLayout drawer;
     @BindView(R.id.nav_view)
@@ -160,18 +160,15 @@ public class MainActivity extends BaseActivityDagger
             showFragmentOrRestore2(R.id.container2, mLoadTrackFragment, "LOAD_TRACK_FRAGMENT");
             drawer.closeDrawers();
         } else {
-            mEnterCodeDialog.setmCallback(new EnterCodeDialog.OnCheckCallback() {
-                @Override
-                public void checkCode(String code) {
-                    if (presenter.checkAndSaveEnteredUniqueCode(code)) {
-                        mEnterCodeDialog.dismiss();
-                        showCheckFragment();
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Codes don`t match",
-                                Toast.LENGTH_SHORT).show();
-                    }
-
+            mEnterCodeDialog.setmCallback(code -> {
+                if (presenter.checkAndSaveEnteredUniqueCode(code)) {
+                    mEnterCodeDialog.dismiss();
+                    showCheckFragment();
+                } else {
+                    Toast.makeText(getApplicationContext(), getString(R.string.string_codes_do_not_match),
+                            Toast.LENGTH_SHORT).show();
                 }
+
             });
             mEnterCodeDialog.show(getSupportFragmentManager(), "ENTER_CODE_DIALOG");
         }
@@ -237,5 +234,13 @@ public class MainActivity extends BaseActivityDagger
 
     public void stopShowingUsers() {
         mMapFragment.stopShowingUsers();
+    }
+
+    public void showUserOnMap(FbConnectedUser user) {
+        mMapFragment.showUserOnMap(user);
+    }
+
+    public void showLastMyLoaction() {
+        mMapFragment.showMyLastLocation();
     }
 }

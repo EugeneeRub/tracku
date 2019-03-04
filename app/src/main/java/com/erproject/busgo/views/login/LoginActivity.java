@@ -46,7 +46,9 @@ public class LoginActivity extends BaseActivityDagger implements LoginActivityCo
     LoginActivityPresenter presenter;
 
     public static Intent newInstance(Context context) {
-        return new Intent(context, LoginActivity.class);
+        Intent intent = new Intent(context, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        return intent;
     }
 
     @OnTextChanged(R.id.et_password)
@@ -77,21 +79,20 @@ public class LoginActivity extends BaseActivityDagger implements LoginActivityCo
 
         if (mEtMail.getText().toString().isEmpty()) {
             validCounter++;
-            mLayoutEmail.setError("Email is empty");
+            mLayoutEmail.setError(getString(R.string.string_email_is_empty));
         } else if (TextValidWatcher.isEmailValid(mEtMail.getText().toString())) {
             validCounter++;
-            mLayoutEmail.setError("Email isn`t correct");
+            mLayoutEmail.setError(getString(R.string.string_email_is_not_correct));
         }
         if (mEtPassword.getText().toString().isEmpty()) {
             validCounter++;
-            mLayoutPasword.setError("Password is empty");
+            mLayoutPasword.setError(getString(R.string.string_password_is_empty));
         } else if (mEtPassword.getText().toString().length() < 6) {
             validCounter++;
-            mLayoutPasword.setError("Password must be more than 6 characters.");
+            mLayoutPasword.setError(getString(R.string.string_password_must_be_six));
         }
 
-        if (validCounter > 0)
-            isCanLogin = false;
+        if (validCounter > 0) isCanLogin = false;
 
         return isCanLogin;
     }

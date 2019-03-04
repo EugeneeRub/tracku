@@ -54,7 +54,7 @@ public class EnterCodeDialog extends DaggerAppCompatDialogFragment {
     private boolean checkValid() {
         if (mEditText.getText().toString().isEmpty()) {
             mTextViewError.setVisibility(View.VISIBLE);
-            mTextViewError.setText("Unique code is empty!");
+            mTextViewError.setText(getString(R.string.string_unique_code_is_empty));
             return false;
         }
         return true;
