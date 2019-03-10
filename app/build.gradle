@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
 
 android {
     compileSdkVersion 28
@@ -77,9 +78,10 @@ dependencies {
     // Services
     implementation 'com.google.firebase:firebase-core:16.0.7'
     // FireBase Cloud
-    implementation 'com.google.firebase:firebase-firestore:18.0.1'
+    implementation 'com.google.firebase:firebase-firestore:18.1.0'
     // FireBase Database
-    implementation 'com.google.firebase:firebase-database:16.0.6'
+    implementation 'com.google.firebase:firebase-database:16.1.0'
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.9'
     // Location Services
     // implementation 'com.google.android.gms:play-services-location:16.0.0'
 }

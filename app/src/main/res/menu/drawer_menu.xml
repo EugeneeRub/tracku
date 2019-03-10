@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
     <item
         android:id="@+id/menu_map"
         android:title="@string/string_map" />
@@ -11,13 +10,16 @@
         android:id="@+id/menu_check_track"
         android:title="@string/string_monitor_users" />
 
-    <group android:id="@+id/group2">
+    <group android:id="@+id/group3">
         <item
             android:id="@+id/menu_settings"
             android:title="@string/string_settings" />
+        <item
+            android:id="@+id/menu_pro_version"
+            android:title="@string/string_pro_version" />
     </group>
 
-    <group android:id="@+id/group3">
+    <group android:id="@+id/group4">
         <item
             android:id="@+id/menu_log_out"
             android:title="@string/string_log_out" />

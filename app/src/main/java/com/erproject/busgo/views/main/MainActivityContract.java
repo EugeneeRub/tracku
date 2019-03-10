@@ -2,8 +2,8 @@ package com.erproject.busgo.views.main;
 
 import android.content.Context;
 
-import com.erproject.busgo.base.mvpInterfaces.BasePresenter;
-import com.erproject.busgo.base.mvpInterfaces.BaseView;
+import com.erproject.busgo.base.mvp.BasePresenter;
+import com.erproject.busgo.base.mvp.BaseView;
 import com.erproject.busgo.data.sharedPreferences.LocalSharedPreferences;
 
 public interface MainActivityContract {

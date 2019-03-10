@@ -124,6 +124,8 @@ public class MapFragment extends BaseFragmentDagger
         mMapboxMap.setMaxZoomPreference(25);
         mMapboxMap.addOnMapClickListener(this);
 
+        mMapboxMap.getUiSettings().setCompassEnabled(false);
+
         if (mLocationEngine == null)
             mLocationEngine = LocationEngineProvider.getBestLocationEngine(getContext());
 
@@ -156,9 +158,11 @@ public class MapFragment extends BaseFragmentDagger
         if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             final AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setMessage(getString(R.string.string_gps_is_disabled)).setCancelable(false)
-                    .setPositiveButton(getString(R.string.string_yes), (dialog, which) -> startActivity(
-                            new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS)))
-                    .setNegativeButton(getString(R.string.string_no), (dialog, which) -> dialog.cancel());
+                    .setPositiveButton(getString(R.string.string_yes),
+                            (dialog, which) -> startActivity(new Intent(
+                                    android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS)))
+                    .setNegativeButton(getString(R.string.string_no),
+                            (dialog, which) -> dialog.cancel());
             final AlertDialog alert = builder.create();
             alert.show();
         }

@@ -208,12 +208,9 @@ public class RegistrationActivity extends BaseActivityDagger
     public void setEmailError(SignUpResponseError error) {
         mProgress.setVisibility(View.GONE);
         if (error == null) return;
-        if (error.getmEmailError() != null) {
-            mLayoutEmail.setError(error.getmEmailError());
-            if (error.getmPhoneError() != null) mLayoutPhone.setError(error.getmPhoneError());
-            if (error.getmUserNameError() != null)
-                mLayoutUsername.setError(error.getmUserNameError());
-        }
+        if (error.getmEmailError() != null) mLayoutEmail.setError(error.getmEmailError());
+        if (error.getmPhoneError() != null) mLayoutPhone.setError(error.getmPhoneError());
+        if (error.getmUserNameError() != null) mLayoutUsername.setError(error.getmUserNameError());
     }
 
     @Override
@@ -231,7 +228,6 @@ public class RegistrationActivity extends BaseActivityDagger
     @SuppressLint("ClickableViewAccessibility")
     private void prepareUniqueAlertNotification() {
         builder = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.myDialog));
-
         mEtUniqueCode.setOnTouchListener((v, event) -> {
             if (event.getAction() == MotionEvent.ACTION_UP) {
                 if (event.getRawX() >= (mEtUniqueCode.getRight() -

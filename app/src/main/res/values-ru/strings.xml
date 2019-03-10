@@ -69,4 +69,5 @@
     <string name="string_in_use">(используется)</string>
     <string name="string_user">Пользователь</string>
     <string name="string_theme">Тема</string>
+    <string name="string_pro_version">Pro версия</string>
 </resources>

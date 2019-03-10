@@ -71,6 +71,7 @@ public class RegistrationActivityPresenter implements RegistrationActivityContra
         //base data
         String[] emailSplitted = user.getmEmail().split("@");
         fbUser.setmEmailSuffix(emailSplitted[1]);
+        fbUser.setmIsHaveProVersion(false);
         fbUser.setmRegisterPhone(user.getmPhoneNumber());
         fbUser.setmUniqueCode(user.getmUniqueCode());
 

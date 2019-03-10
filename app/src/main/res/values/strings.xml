@@ -68,4 +68,5 @@
     <string name="string_in_use">(in use)</string>
     <string name="string_user">User</string>
     <string name="string_theme">Theme</string>
+    <string name="string_pro_version">Pro version</string>
 </resources>

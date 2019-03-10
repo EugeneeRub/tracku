@@ -1,7 +1,7 @@
 package com.erproject.busgo.views.registration;
 
-import com.erproject.busgo.base.mvpInterfaces.BasePresenter;
-import com.erproject.busgo.base.mvpInterfaces.BaseView;
+import com.erproject.busgo.base.mvp.BasePresenter;
+import com.erproject.busgo.base.mvp.BaseView;
 import com.erproject.busgo.data.data.responses.SignUpResponseError;
 
 public interface RegistrationActivityContract {

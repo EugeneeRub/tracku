@@ -9,6 +9,7 @@ public class FbUserRegistration {
     private String mRegisterPhone;
     private String mEmailSuffix;
     private String mUniqueCode;
+    private Boolean mIsHaveProVersion;
     private Map<String, FbConnectedUser> mapOfUsers;
 
     public FbUserRegistration() {
@@ -44,5 +45,13 @@ public class FbUserRegistration {
 
     public void setmUniqueCode(String mUniqueCode) {
         this.mUniqueCode = mUniqueCode;
+    }
+
+    public Boolean getmIsHaveProVersion() {
+        return mIsHaveProVersion;
+    }
+
+    public void setmIsHaveProVersion(Boolean mIsHaveProVersion) {
+        this.mIsHaveProVersion = mIsHaveProVersion;
     }
 }

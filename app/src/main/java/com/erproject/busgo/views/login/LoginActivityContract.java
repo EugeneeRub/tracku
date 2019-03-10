@@ -1,7 +1,7 @@
 package com.erproject.busgo.views.login;
 
-import com.erproject.busgo.base.mvpInterfaces.BasePresenter;
-import com.erproject.busgo.base.mvpInterfaces.BaseView;
+import com.erproject.busgo.base.mvp.BasePresenter;
+import com.erproject.busgo.base.mvp.BaseView;
 
 public interface LoginActivityContract {
     interface View extends BaseView {
