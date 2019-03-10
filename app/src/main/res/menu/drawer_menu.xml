@@ -16,7 +16,8 @@
             android:title="@string/string_settings" />
         <item
             android:id="@+id/menu_pro_version"
-            android:title="@string/string_pro_version" />
+            android:title="@string/string_pro_version"
+            android:visible="false" />
     </group>
 
     <group android:id="@+id/group4">
