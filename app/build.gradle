@@ -17,22 +17,25 @@ android {
 
         resValue "string", "API_KEY_PLACE_FINDER",
                 (project.findProperty("API_KEY_PLACE_FINDER") ?: "")
-        resValue "string", "ACCESS_TOKEN_MAP",
-                (project.findProperty("ACCESS_TOKEN_MAP") ?: "")
 
         multiDexEnabled true
     }
     buildTypes {
+        def props = new Properties()
+        file("keys.properties").withInputStream { props.load(it) }
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
-            buildConfigField 'String', "START_PATH", START_PATH
-            buildConfigField 'String', "MAP_USER_PATH", MAP_USER_PATH
+            buildConfigField 'String', "ACCESS_TOKEN_MAP", props.getProperty("ACCESS_TOKEN_MAP")
+            buildConfigField 'String', "START_PATH", props.getProperty("START_PATH")
+            buildConfigField 'String', "MAP_USER_PATH", props.getProperty("MAP_USER_PATH")
         }
         debug {
-            buildConfigField 'String', "START_PATH", START_PATH
-            buildConfigField 'String', "MAP_USER_PATH", MAP_USER_PATH
+            buildConfigField 'String', "ACCESS_TOKEN_MAP", props.getProperty("ACCESS_TOKEN_MAP")
+            buildConfigField 'String', "START_PATH", props.getProperty("START_PATH")
+            buildConfigField 'String', "MAP_USER_PATH", props.getProperty("MAP_USER_PATH")
         }
     }
     // Fix RxJava

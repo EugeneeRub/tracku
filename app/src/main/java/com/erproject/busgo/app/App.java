@@ -3,6 +3,7 @@ package com.erproject.busgo.app;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.erproject.busgo.BuildConfig;
 import com.erproject.busgo.R;
 import com.erproject.busgo.di.application.DaggerApplicationComponent;
 import com.mapbox.mapboxsdk.Mapbox;
@@ -26,7 +27,7 @@ public class App extends DaggerApplication {
     @SuppressWarnings("all")
     public void onCreate() {
         super.onCreate();
-        Mapbox.getInstance(this, getString(R.string.ACCESS_TOKEN_MAP));
+        Mapbox.getInstance(this, BuildConfig.ACCESS_TOKEN_MAP);
 
         app = this;
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
