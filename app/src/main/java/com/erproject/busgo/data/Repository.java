@@ -3,7 +3,7 @@ package com.erproject.busgo.data;
 import android.app.Application;
 import android.content.Context;
 import android.net.ConnectivityManager;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.erproject.busgo.data.annotations.Remote;
 import com.erproject.busgo.data.data.request.UserRegistrationRequest;

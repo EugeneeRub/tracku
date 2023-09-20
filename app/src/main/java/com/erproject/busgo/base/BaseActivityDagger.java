@@ -1,11 +1,11 @@
 package com.erproject.busgo.base;
 
-import android.support.annotation.IdRes;
-import android.support.annotation.StringRes;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AlertDialog;
+import androidx.annotation.IdRes;
+import androidx.annotation.StringRes;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.appcompat.app.AlertDialog;
 import android.view.ContextThemeWrapper;
 
 import com.erproject.busgo.R;

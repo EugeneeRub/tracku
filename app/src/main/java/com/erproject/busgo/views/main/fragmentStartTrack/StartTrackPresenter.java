@@ -1,6 +1,6 @@
 package com.erproject.busgo.views.main.fragmentStartTrack;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.erproject.busgo.BuildConfig;
 import com.erproject.busgo.data.data.request.fbRegistration.FbConnectedUser;

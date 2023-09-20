@@ -1,14 +1,13 @@
 package com.erproject.busgo.views.main.fragmentLoadTrack.adapter.adapterSearch;
 
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.erproject.busgo.R;
 import com.erproject.busgo.data.data.simpleData.UserModel;
-import com.erproject.busgo.views.main.MainActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

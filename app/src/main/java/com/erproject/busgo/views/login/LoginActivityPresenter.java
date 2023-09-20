@@ -32,20 +32,22 @@ public class LoginActivityPresenter implements LoginActivityContract.Presenter {
     public void sendLogin(final String email, final String password) {
         UserRegistrationRequest user = new UserRegistrationRequest(email, password);
 
-        mRepository.signIn(user).subscribe(new Subscriber<BaseResponse>() {
-            @Override
-            public void onCompleted() {
-            }
+        mView.doneLogin(email, password, "token_example");
 
-            @Override
-            public void onError(Throwable e) {
-                mView.showError(ErrorConverter.getMsgFromCode(e));
-            }
-
-            @Override
-            public void onNext(BaseResponse baseResponse) {
-                mView.doneLogin(email, password, "token_example");
-            }
-        });
+//        mRepository.signIn(user).subscribe(new Subscriber<BaseResponse>() {
+//            @Override
+//            public void onCompleted() {
+//            }
+//
+//            @Override
+//            public void onError(Throwable e) {
+//                mView.showError(ErrorConverter.getMsgFromCode(e));
+//            }
+//
+//            @Override
+//            public void onNext(BaseResponse baseResponse) {
+//                mView.doneLogin(email, password, "token_example");
+//            }
+//        });
     }
 }

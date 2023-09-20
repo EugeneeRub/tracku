@@ -1,7 +1,7 @@
 package com.erproject.busgo.data.source;
 
 import android.app.Application;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.erproject.busgo.data.data.request.UserRegistrationRequest;
 import com.erproject.busgo.data.data.responses.BaseResponse;

@@ -1,7 +1,7 @@
 package com.erproject.busgo.views.main.fragmentMap;
 
 import android.location.Location;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import com.erproject.busgo.data.data.simpleData.UserModel;
 

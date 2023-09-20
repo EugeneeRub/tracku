@@ -1,7 +1,7 @@
 package com.erproject.busgo.views.main;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.erproject.busgo.BuildConfig;
 import com.erproject.busgo.data.Repository;
